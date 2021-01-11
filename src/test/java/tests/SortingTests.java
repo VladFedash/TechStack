@@ -32,7 +32,7 @@ public class SortingTests extends BaseTest {
     public void checkCorrectSortingProductDescending() {
         getHomePage().clickCatalogButton();
         getHomePage().clickNotebooksPageOpenButton();
-        getBasePage().waitForElementVisibility(10, getNotebooksPage().getSortedList());
+        getBasePage().waitForElementVisibility(5, getNotebooksPage().getSortedList());
 
         Select objSelect = new Select(getNotebooksPage().getSortedList());
         objSelect.selectByVisibleText(SORTING_BY_DESCENDING_KEYWORD);
