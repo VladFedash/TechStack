@@ -5,12 +5,16 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 import pages.*;
 
 public class BaseTest {
 
     private WebDriver driver;
     private static final String ROZETKA_URL = "https://rozetka.com.ua/";
+
+    @Test
+    public void plug(){}
 
     @BeforeTest
     public void profileSetUp() {
