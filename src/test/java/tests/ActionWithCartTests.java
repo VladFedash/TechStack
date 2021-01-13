@@ -76,4 +76,3 @@ public class ActionWithCartTests extends BaseTest {
         assertEquals(actualResult, expectedResult);
     }
 }
-
