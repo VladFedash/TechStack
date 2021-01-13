@@ -24,22 +24,6 @@ public class BaseTest {
         driver.get(ROZETKA_URL);
     }
 
-    public BasePage getBasePage() {
-        return new BasePage(driver);
-    }
-
-    public HomePage getHomePage() {
-        return new HomePage(driver);
-    }
-
-    public SearchResultsPage getSearchPage() {
-        return new SearchResultsPage(driver);
-    }
-
-    public NotebooksPage getNotebooksPage() {
-        return new NotebooksPage(driver);
-    }
-
     @AfterMethod
     public void tearDown() {
         driver.quit();
