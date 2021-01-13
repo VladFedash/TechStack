@@ -4,61 +4,91 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.Test;
+import pages.BasePage;
+import pages.HomePage;
+import pages.NotebooksPage;
+import pages.SearchResultsPage;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class SortingTests extends BaseTest {
     private static final String SORTING_BY_ASCENDING_KEYWORD = "От дешевых к дорогим";
     private static final String SORTING_BY_DESCENDING_KEYWORD = "От дорогих к дешевым";
-    private static final String CHOSEN_NOTEBOOK_FIRM = "HP";
+    private static final String CHOSEN_NOTEBOOK_FIRM = "Acer";
+
+    BasePage basePage = new BasePage(driver);
+    HomePage homePage = new HomePage(driver);
+    SearchResultsPage searchResultsPage = new SearchResultsPage(driver);
+    NotebooksPage notebooksPage = new NotebooksPage(driver);
 
     @Test
     public void checkCorrectSortingProductAscending() {
-        getHomePage().clickCatalogButton();
-        getHomePage().clickNotebooksPageOpenButton();
-        getBasePage().waitForElementVisibility(5, getNotebooksPage().getSortedList());
+        basePage.clickButton(homePage.catalog);
+        basePage.clickButton(homePage.notebooksPageOpenButton);
+        basePage.waitForElementVisibility(5, notebooksPage.sortedList);
 
-        Select objSelect = new Select(getNotebooksPage().getSortedList());
+        Select objSelect = new Select(notebooksPage.sortedList);
         objSelect.selectByVisibleText(SORTING_BY_ASCENDING_KEYWORD);
 
+        List<Integer> actualProductPriceList = new ArrayList<>();
 
-        for (int i = 0; i < getNotebooksPage().getProductPriceList().size() - 1; i++) {
-            assertTrue(Integer.parseInt(getNotebooksPage().getProductPriceList().get(i).getText().replace(" ", ""))
-                    <= Integer.parseInt(getNotebooksPage().getProductPriceList().get(i + 1).getText().replace(" ", "")));
+        for (int i = 0; i < notebooksPage.productPriceList.size(); i++) {
+            actualProductPriceList.add(Integer.parseInt(notebooksPage.productPriceList.get(i)
+                    .getText().replaceAll("[^0-9]", "")));
+        }
+
+        List<Integer> expectedProductPriceList = new ArrayList<>(actualProductPriceList);
+        Collections.sort(expectedProductPriceList);
+
+        for (int i = 0; i < actualProductPriceList.size(); i++) {
+            assertEquals(actualProductPriceList.get(i), expectedProductPriceList.get(i));
         }
     }
 
     @Test
     public void checkCorrectSortingProductDescending() {
-        getHomePage().clickCatalogButton();
-        getHomePage().clickNotebooksPageOpenButton();
-        getBasePage().waitForElementVisibility(5, getNotebooksPage().getSortedList());
+        basePage.clickButton(homePage.catalog);
+        basePage.clickButton(homePage.notebooksPageOpenButton);
+        basePage.waitForElementVisibility(5, notebooksPage.sortedList);
 
-        Select objSelect = new Select(getNotebooksPage().getSortedList());
+        Select objSelect = new Select(notebooksPage.sortedList);
         objSelect.selectByVisibleText(SORTING_BY_DESCENDING_KEYWORD);
 
-        for (int i = 0; i < getNotebooksPage().getProductPriceList().size() - 1; i++) {
-            assertTrue(Integer.parseInt(getNotebooksPage().getProductPriceList().get(i).getText().replace(" ", ""))
-                    >= Integer.parseInt(getNotebooksPage().getProductPriceList().get(i + 1).getText().replace(" ", "")));
+        List<Integer> actualProductPriceList = new ArrayList<>();
+
+        for (int i = 0; i < notebooksPage.productPriceList.size(); i++) {
+            actualProductPriceList.add(Integer.parseInt(notebooksPage.productPriceList.get(i)
+                    .getText().replaceAll("[^0-9]", "")));
+        }
+
+        List<Integer> expectedProductPriceList = new ArrayList<>(actualProductPriceList);
+        expectedProductPriceList.sort(Collections.reverseOrder());
+
+        for (int i = 0; i < actualProductPriceList.size(); i++) {
+            assertEquals(actualProductPriceList.get(i), expectedProductPriceList.get(i));
         }
     }
 
     @Test
     public void checkCorrectSortingProductByFirmName() {
-        getHomePage().clickCatalogButton();
-        getHomePage().clickNotebooksPageOpenButton();
-        getBasePage().waitForElementVisibility(5, getNotebooksPage().getHpFirmSelectButton());
+        basePage.clickButton(homePage.catalog);
+        basePage.clickButton(homePage.notebooksPageOpenButton);
+        basePage.waitForElementVisibility(5, notebooksPage.acerFirmSelectButton);
 
-        JavascriptExecutor js = (JavascriptExecutor) getBasePage().driver;
-        js.executeScript("window.scrollBy(0,600)");
-        getBasePage().waitForElementVisibility(5, getNotebooksPage().getSortedList());
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollBy(0,400)");
 
-        getNotebooksPage().clickHpFirmSelectButton();
-        getBasePage().driver.navigate().refresh();
+        basePage.waitForElementVisibility(5, notebooksPage.sortedList);
+        basePage.clickButton(notebooksPage.acerFirmSelectButton);
+        driver.navigate().refresh();
 
-        for (WebElement element : getSearchPage().getTitleProductList()) {
-            assertTrue(element.getText().replaceAll("Н", "H").replaceAll("Р", "P").contains(CHOSEN_NOTEBOOK_FIRM));
-              System.out.println(element.getText());
+        for (WebElement element : searchResultsPage.titleProductList) {
+            assertTrue(element.getText().contains(CHOSEN_NOTEBOOK_FIRM));
         }
     }
 }

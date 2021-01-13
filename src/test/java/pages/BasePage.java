@@ -18,6 +18,20 @@ public class BasePage {
     public void waitForElementVisibility(long timeout, WebElement element) {
         WebDriverWait wait = new WebDriverWait(driver, timeout);
         wait.until(ExpectedConditions.visibilityOf(element));
+    }
 
+    public void clickButton(WebElement element) {
+        waitForElementVisibility(5, element);
+        element.click();
+    }
+
+    public boolean elementIsVisible(long timeout, WebElement element) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, timeout);
+            wait.until(ExpectedConditions.visibilityOf(element));
+            return true;
+        } catch (Exception exception) {
+            return false;
+        }
     }
 }
