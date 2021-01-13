@@ -9,9 +9,8 @@ import java.util.Random;
 import static org.testng.Assert.assertEquals;
 
 public class HomePageTests extends BaseTest {
-
-    BasePage basePage = new BasePage(driver);
-    HomePage homePage = new HomePage(driver);
+    BasePage basePage = getBasePage();
+    HomePage homePage = getHomePage();
 
     @Test
     public void checkAbilityChangeCityLocation() {

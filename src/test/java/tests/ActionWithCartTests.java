@@ -32,6 +32,8 @@ public class ActionWithCartTests extends BaseTest {
         basePage.waitForElementVisibility(5, homePage.productCountInCart);
         int actualResult = Integer.parseInt(homePage.productCountInCart.getText().trim());
         assertEquals(actualResult, EXPECTED_AMOUNT_OF_PRODUCTS_IN_CART_AFTER_ADD);
+//        basePage.clickButton(searchResultsPage.addProductInCartButton.get(0));
+
     }
 
     @Test
