@@ -2,12 +2,8 @@ package tests;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import pages.BasePage;
-import pages.HomePage;
-import pages.NotebooksPage;
-import pages.SearchResultsPage;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 
 public class BaseTest {
 
@@ -18,13 +14,13 @@ public class BaseTest {
         System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
     }
 
-    @BeforeMethod
+    @BeforeClass
     public void testSetUp() {
         driver.manage().window().maximize();
         driver.get(ROZETKA_URL);
     }
 
-    @AfterMethod
+    @AfterClass
     public void tearDown() {
         driver.quit();
     }
