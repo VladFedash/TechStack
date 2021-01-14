@@ -38,6 +38,7 @@ public class SortingTests extends BaseTest {
         List<Integer> actualProductPriceList = new ArrayList<>();
 
         for (int i = 0; i < notebooksPage.productPriceList.size(); i++) {
+            basePage.waitForElementVisibility(5, notebooksPage.productPriceList.get(i));
             actualProductPriceList.add(Integer.parseInt(notebooksPage.productPriceList.get(i)
                     .getText().replaceAll("[^0-9]", "")));
         }
@@ -58,16 +59,18 @@ public class SortingTests extends BaseTest {
 
         Select objSelect = new Select(notebooksPage.sortedList);
         objSelect.selectByVisibleText(SORTING_BY_DESCENDING_KEYWORD);
+        driver.navigate().refresh();
 
         List<Integer> actualProductPriceList = new ArrayList<>();
 
         for (int i = 0; i < notebooksPage.productPriceList.size(); i++) {
+            basePage.waitForElementVisibility(10, notebooksPage.productPriceList.get(i));
             actualProductPriceList.add(Integer.parseInt(notebooksPage.productPriceList.get(i)
                     .getText().replaceAll("[^0-9]", "")));
         }
 
         List<Integer> expectedProductPriceList = new ArrayList<>(actualProductPriceList);
-        expectedProductPriceList.sort(Collections.reverseOrder());
+        Collections.sort(expectedProductPriceList, Collections.reverseOrder());
 
         for (int i = 0; i < actualProductPriceList.size(); i++) {
             assertEquals(actualProductPriceList.get(i), expectedProductPriceList.get(i));

@@ -34,4 +34,9 @@ public class BasePage {
             return false;
         }
     }
+
+    public void closePopUpOrMoveOn(WebElement banner, WebElement closeAdButton){
+        if (elementIsVisible(10, banner))
+            clickButton(closeAdButton);
+    }
 }

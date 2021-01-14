@@ -32,8 +32,6 @@ public class ActionWithCartTests extends BaseTest {
         basePage.waitForElementVisibility(5, homePage.productCountInCart);
         int actualResult = Integer.parseInt(homePage.productCountInCart.getText().trim());
         assertEquals(actualResult, EXPECTED_AMOUNT_OF_PRODUCTS_IN_CART_AFTER_ADD);
-//        basePage.clickButton(searchResultsPage.addProductInCartButton.get(0));
-
     }
 
     @Test
@@ -60,9 +58,7 @@ public class ActionWithCartTests extends BaseTest {
     public void checkSubtotalElementsInCart() {
         int expectedResult = 0;
         homePage.inputToSearchField(XIOMI_SEARCH_WORD);
-
-        if (basePage.elementIsVisible(10, searchResultsPage.banner))
-            basePage.clickButton(searchResultsPage.closeAdButton);
+        basePage.closePopUpOrMoveOn(searchResultsPage.banner, searchResultsPage.closeAdButton);
 
         searchResultsPage.clickAddVisibleProductInCartButton();
         basePage.waitForElementVisibility(30, homePage.productCountInCart);
