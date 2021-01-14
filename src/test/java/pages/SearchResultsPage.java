@@ -20,12 +20,6 @@ public class SearchResultsPage extends BasePage {
     @FindBy(xpath = "//button[contains(@class, 'buy-button')]")
     public List<WebElement> addProductInCartButton;
 
-    @FindBy(xpath = "//span[@class = 'exponea-close-cross']")
-    public WebElement closeAdButton;
-
-    @FindBy(id = "rz-banner")
-    public WebElement banner;
-
     public SearchResultsPage(WebDriver driver) {
         super(driver);
     }

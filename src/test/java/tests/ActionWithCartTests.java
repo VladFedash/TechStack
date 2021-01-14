@@ -58,7 +58,7 @@ public class ActionWithCartTests extends BaseTest {
     public void checkSubtotalElementsInCart() {
         int expectedResult = 0;
         homePage.inputToSearchField(XIOMI_SEARCH_WORD);
-        basePage.closePopUpOrMoveOn(searchResultsPage.banner, searchResultsPage.closeAdButton);
+        basePage.closeAdPopup();
 
         searchResultsPage.clickAddVisibleProductInCartButton();
         basePage.waitForElementVisibility(30, homePage.productCountInCart);
