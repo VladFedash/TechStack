@@ -34,6 +34,7 @@ public class SortingTests extends BaseTest {
 
         Select objSelect = new Select(notebooksPage.sortedList);
         objSelect.selectByVisibleText(SORTING_BY_ASCENDING_KEYWORD);
+        driver.navigate().refresh();
 
         List<Integer> actualProductPriceList = new ArrayList<>();
 
