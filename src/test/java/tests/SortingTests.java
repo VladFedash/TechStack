@@ -39,11 +39,10 @@ public class SortingTests extends BaseTest {
         driver.navigate().refresh();
         List<Integer> actualProductPriceList = new ArrayList<>();
 
-        for (int i = 0; i < notebooksPage.productPriceList.size(); i++) {
-            waitUtils.waitForElementVisibility(5, notebooksPage.productPriceList.get(i));
-            actualProductPriceList.add(Integer.parseInt(notebooksPage.productPriceList.get(i)
-                    .getText().replaceAll("[^0-9]", "")));
-        }
+        notebooksPage.productPriceList.forEach(productPrice ->{
+            waitUtils.waitForElementVisibility(5, productPrice);
+            actualProductPriceList.add(Integer.parseInt(productPrice.getText().replaceAll("[^0-9]", "")));
+        });
 
         List<Integer> expectedProductPriceList = new ArrayList<>(actualProductPriceList);
         Collections.sort(expectedProductPriceList);
@@ -64,11 +63,10 @@ public class SortingTests extends BaseTest {
         driver.navigate().refresh();
         List<Integer> actualProductPriceList = new ArrayList<>();
 
-        for (int i = 0; i < notebooksPage.productPriceList.size(); i++) {
-            waitUtils.waitForElementVisibility(10, notebooksPage.productPriceList.get(i));
-            actualProductPriceList.add(Integer.parseInt(notebooksPage.productPriceList.get(i)
-                    .getText().replaceAll("[^0-9]", "")));
-        }
+        notebooksPage.productPriceList.forEach(productPrice ->{
+            waitUtils.waitForElementVisibility(5, productPrice);
+            actualProductPriceList.add(Integer.parseInt(productPrice.getText().replaceAll("[^0-9]", "")));
+        });
 
         List<Integer> expectedProductPriceList = new ArrayList<>(actualProductPriceList);
         expectedProductPriceList.sort(Collections.reverseOrder());
