@@ -4,18 +4,25 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.FindBys;
+import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
 public class HomePage extends BasePage {
-
-    @FindBy(xpath = "//input[contains(@class, 'search-form')]")
+    @FindBy(name = "search")
     public WebElement searchField;
 
-    @FindBy(xpath = "//button[@class = 'menu-toggler']")
+    @FindBys( {
+            @FindBy(xpath = "//button[@class = 'menu-toggler']"),
+            @FindBy(xpath = "//button[@aria-label = 'Каталог товаров']")
+    })
     public WebElement catalog;
 
-    @FindBy(xpath = "//a[@class ='menu__hidden-title'][contains(text(), 'Ноутбуки')]")
+    @FindBy(xpath = "//a[@class = 'header__logo']")
+    public WebElement siteLogo;
+
+    @FindBy(linkText = "Ноутбуки")
     public WebElement notebooksPageOpenButton;
 
     @FindBy(xpath = "//div[@class = 'js-rz-cart']//span[contains(@class, 'button-counter')]")
@@ -24,13 +31,13 @@ public class HomePage extends BasePage {
     @FindBy(id = "cartProductActions0")
     public WebElement contextMenuButton;
 
-    @FindBy(xpath = "//button[contains(@class, 'context-menu-actions__button')]")
+    @FindBy(xpath = "//button[contains(@class, 'context-menu-actions')]")
     public WebElement deleteProductFromCartButton;
 
     @FindBy(xpath = "//h4[@class = 'cart-dummy__heading']")
     public WebElement emptyCartMessage;
 
-    @FindBy(xpath = "//div[@class = 'js-rz-cart']")
+    @FindBy(css = ".js-rz-cart")
     public WebElement openCartButton;
 
     @FindBy(xpath = "//div[@class = 'cart-product__coast']")
@@ -45,7 +52,7 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//div[@class = 'modal__header']")
     public WebElement modalHeader;
 
-    @FindBy(xpath = "//a[@class = 'header-location__popular-link']")
+    @FindBy(className = "header-location__popular-link")
     public List<WebElement> popularCityList;
 
     @FindBy(xpath = "//button[contains(@class, 'medium button')]")
@@ -55,7 +62,7 @@ public class HomePage extends BasePage {
         super(driver);
     }
 
-    public void inputToSearchField(String keyword) {
+    public void inputToSearchFieldAndPressEnter(String keyword) {
         searchField.sendKeys(keyword, Keys.ENTER);
     }
 }
