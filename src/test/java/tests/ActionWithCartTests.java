@@ -1,7 +1,7 @@
 package tests;
 
 import helpers.BaseOperations;
-import helpers.Expectations;
+import helpers.WaitUtils;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -15,12 +15,12 @@ import static org.testng.Assert.assertTrue;
 
 public class ActionWithCartTests extends BaseTest {
     private static final int EXPECTED_AMOUNT_OF_PRODUCTS_IN_CART_AFTER_ADD = 1;
-    private static final String EXPECTED_CART_EMPTY_MESSAGE = "Корзина пуста";
+    private static final String EXPECTED_CART_EMPTY_MESSAGE_RU = "Корзина пуста";
     private static final String NOKIA_SEARCH_WORD = "nokia";
     private static final String XIOMI_SEARCH_WORD = "xiomi";
 
     BaseOperations baseOperations = new BaseOperations(driver);
-    Expectations expectations = new BaseOperations(driver);
+    WaitUtils waitUtils = new WaitUtils(driver);
     BasePage basePage = new BasePage(driver);
     HomePage homePage = new HomePage(driver);
     SearchResultsPage searchResultsPage = new SearchResultsPage(driver);
@@ -34,7 +34,7 @@ public class ActionWithCartTests extends BaseTest {
                 .sendKeys(homePage.searchField, NOKIA_SEARCH_WORD, Keys.ENTER)
                 .perform();
         baseOperations.clickButton(searchResultsPage.addProductInCartButton.get(0));
-        expectations.waitForElementVisibility(5, homePage.productCountInCart);
+        waitUtils.waitForElementVisibility(5, homePage.productCountInCart);
         int actualResult = Integer.parseInt(homePage.productCountInCart.getText().trim());
         assertEquals(actualResult, EXPECTED_AMOUNT_OF_PRODUCTS_IN_CART_AFTER_ADD);
     }
@@ -48,15 +48,15 @@ public class ActionWithCartTests extends BaseTest {
                 .sendKeys(homePage.searchField, NOKIA_SEARCH_WORD, Keys.ENTER)
                 .perform();
         baseOperations.clickButton(searchResultsPage.addProductInCartButton.get(0));
-        expectations.waitForElementVisibility(5, homePage.productCountInCart);
+        waitUtils.waitForElementVisibility(5, homePage.productCountInCart);
 
         baseOperations.clickButton(searchResultsPage.addProductInCartButton.get(0));
         baseOperations.clickButton(homePage.contextMenuButton);
         baseOperations.clickButton(homePage.deleteProductFromCartButton);
 
-        expectations.waitForElementVisibility(5, homePage.emptyCartMessage);
+        waitUtils.waitForElementVisibility(5, homePage.emptyCartMessage);
         String actualResult = homePage.emptyCartMessage.getText();
-        assertEquals(actualResult, EXPECTED_CART_EMPTY_MESSAGE);
+        assertEquals(actualResult, EXPECTED_CART_EMPTY_MESSAGE_RU);
     }
 
     @Test
@@ -66,13 +66,14 @@ public class ActionWithCartTests extends BaseTest {
         basePage.closeAdPopup();
 
         searchResultsPage.clickAddVisibleProductInCartButton();
-        expectations.waitForElementVisibility(30, homePage.productCountInCart);
+        waitUtils.waitForElementVisibility(30, homePage.productCountInCart);
         baseOperations.clickButton(homePage.openCartButton);
-        expectations.waitForElementVisibility(15, homePage.totalProductPriceInCart);
+
+        waitUtils.waitForElementVisibility(15, homePage.totalProductPriceInCart);
 
         for (WebElement element : homePage.productPriceListInCart) {
             assertTrue(element.isEnabled());
-            expectations.waitForElementVisibility(5, element);
+            waitUtils.waitForElementVisibility(5, element);
             expectedResult += Integer.parseInt(element.getText().replaceAll("[^0-9]", ""));
         }
 

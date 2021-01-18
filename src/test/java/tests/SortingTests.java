@@ -1,7 +1,7 @@
 package tests;
 
 import helpers.BaseOperations;
-import helpers.Expectations;
+import helpers.WaitUtils;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -23,7 +23,7 @@ public class SortingTests extends BaseTest {
     private static final String CHOSEN_NOTEBOOK_FIRM = "Acer";
 
     BaseOperations baseOperations = new BaseOperations(driver);
-    Expectations expectations = new Expectations(driver);
+    WaitUtils waitUtils = new WaitUtils(driver);
     HomePage homePage = new HomePage(driver);
     SearchResultsPage searchResultsPage = new SearchResultsPage(driver);
     NotebooksPage notebooksPage = new NotebooksPage(driver);
@@ -32,7 +32,7 @@ public class SortingTests extends BaseTest {
     public void checkCorrectSortingProductAscending() {
         baseOperations.clickButton(homePage.catalog);
         baseOperations.clickButton(homePage.notebooksPageOpenButton);
-        expectations.waitForElementVisibility(5, notebooksPage.sortedList);
+        waitUtils.waitForElementVisibility(5, notebooksPage.sortedList);
 
         Select objSelect = new Select(notebooksPage.sortedList);
         objSelect.selectByVisibleText(SORTING_BY_ASCENDING_KEYWORD);
@@ -40,7 +40,7 @@ public class SortingTests extends BaseTest {
         List<Integer> actualProductPriceList = new ArrayList<>();
 
         for (int i = 0; i < notebooksPage.productPriceList.size(); i++) {
-            expectations.waitForElementVisibility(5, notebooksPage.productPriceList.get(i));
+            waitUtils.waitForElementVisibility(5, notebooksPage.productPriceList.get(i));
             actualProductPriceList.add(Integer.parseInt(notebooksPage.productPriceList.get(i)
                     .getText().replaceAll("[^0-9]", "")));
         }
@@ -57,7 +57,7 @@ public class SortingTests extends BaseTest {
     public void checkCorrectSortingProductDescending() {
         baseOperations.clickButton(homePage.catalog);
         baseOperations.clickButton(homePage.notebooksPageOpenButton);
-        expectations.waitForElementVisibility(5, notebooksPage.sortedList);
+        waitUtils.waitForElementVisibility(5, notebooksPage.sortedList);
 
         Select objSelect = new Select(notebooksPage.sortedList);
         objSelect.selectByVisibleText(SORTING_BY_DESCENDING_KEYWORD);
@@ -65,7 +65,7 @@ public class SortingTests extends BaseTest {
         List<Integer> actualProductPriceList = new ArrayList<>();
 
         for (int i = 0; i < notebooksPage.productPriceList.size(); i++) {
-            expectations.waitForElementVisibility(10, notebooksPage.productPriceList.get(i));
+            waitUtils.waitForElementVisibility(10, notebooksPage.productPriceList.get(i));
             actualProductPriceList.add(Integer.parseInt(notebooksPage.productPriceList.get(i)
                     .getText().replaceAll("[^0-9]", "")));
         }
@@ -82,12 +82,12 @@ public class SortingTests extends BaseTest {
     public void checkCorrectSortingProductByFirmName() {
         baseOperations.clickButton(homePage.catalog);
         baseOperations.clickButton(homePage.notebooksPageOpenButton);
-        expectations.waitForElementVisibility(5, notebooksPage.acerFirmSelectButton);
+        waitUtils.waitForElementVisibility(5, notebooksPage.acerFirmSelectButton);
 
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollBy(0,400)");
 
-        expectations.waitForElementVisibility(5, notebooksPage.sortedList);
+        waitUtils.waitForElementVisibility(5, notebooksPage.sortedList);
         baseOperations.clickButton(notebooksPage.acerFirmSelectButton);
         driver.navigate().refresh();
 

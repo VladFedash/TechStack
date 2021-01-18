@@ -31,7 +31,7 @@ public class HomePage extends BasePage {
     @FindBy(id = "cartProductActions0")
     public WebElement contextMenuButton;
 
-    @FindBy(xpath = "//button[contains(@class, 'context-menu-actions__button')]")
+    @FindBy(xpath = "//button[contains(@class, 'context-menu-actions')]")
     public WebElement deleteProductFromCartButton;
 
     @FindBy(xpath = "//h4[@class = 'cart-dummy__heading']")
@@ -60,7 +60,6 @@ public class HomePage extends BasePage {
 
     public HomePage(WebDriver driver) {
         super(driver);
-        PageFactory.initElements(driver, this);
     }
 
     public void inputToSearchFieldAndPressEnter(String keyword) {

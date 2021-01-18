@@ -1,7 +1,7 @@
 package tests;
 
 import helpers.BaseOperations;
-import helpers.Expectations;
+import helpers.WaitUtils;
 import org.testng.annotations.Test;
 import pages.HomePage;
 
@@ -11,13 +11,13 @@ import static org.testng.Assert.*;
 
 public class HomePageTests extends BaseTest {
     BaseOperations baseOperations = new BaseOperations(driver);
-    Expectations expectations = new Expectations(driver);
+    WaitUtils waitUtils = new WaitUtils(driver);
     HomePage homePage = new HomePage(driver);
 
     @Test
     public void checkAbilityChangeCityLocation() {
         baseOperations.clickButton(homePage.changeCitiesButton);
-        expectations.waitForElementVisibility(5, homePage.modalHeader);
+        waitUtils.waitForElementVisibility(5, homePage.modalHeader);
 
         Random rand = new Random();
         int randomCity = rand.nextInt(homePage.popularCityList.size());
@@ -26,7 +26,7 @@ public class HomePageTests extends BaseTest {
         homePage.popularCityList.get(randomCity).click();
         assertFalse(homePage.acceptCityChoiceButton.isSelected());
         baseOperations.clickButton(homePage.acceptCityChoiceButton);
-        expectations.waitForElementVisibility(5, homePage.changeCitiesButton);
+        waitUtils.waitForElementVisibility(5, homePage.changeCitiesButton);
         assertEquals(actualResult, homePage.changeCitiesButton.getText());
     }
 

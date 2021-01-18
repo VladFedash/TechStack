@@ -1,7 +1,7 @@
 package pages;
 
 import helpers.BaseOperations;
-import helpers.ElementVisibility;
+import helpers.WaitUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
@@ -11,7 +11,7 @@ import org.openqa.selenium.support.PageFactory;
 public class BasePage {
     WebDriver driver;
     private final BaseOperations baseOperations;
-    private final ElementVisibility elementVisibility;
+    private final WaitUtils waitUtils;
 
     @FindBy(xpath = "//span[@class = 'exponea-close-cross']")
     public WebElement closeAdButton;
@@ -25,12 +25,12 @@ public class BasePage {
     public BasePage(WebDriver driver) {
         this.driver = driver;
         baseOperations = new BaseOperations(driver);
-        elementVisibility = new ElementVisibility(driver);
+        waitUtils = new WaitUtils(driver);
         PageFactory.initElements(driver, this);
     }
 
     public void closeAdPopup() {
-        if (elementVisibility.elementIsVisible(10, banner))
+        if (waitUtils.elementIsVisible(10, banner))
             baseOperations.clickButton(closeAdButton);
     }
 }

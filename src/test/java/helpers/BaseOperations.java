@@ -3,7 +3,7 @@ package helpers;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class BaseOperations extends Expectations {
+public class BaseOperations extends WaitUtils {
 
     public BaseOperations(WebDriver driver) {
         super(driver);

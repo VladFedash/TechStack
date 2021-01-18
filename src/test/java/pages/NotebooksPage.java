@@ -20,6 +20,5 @@ public class NotebooksPage extends BasePage {
 
     public NotebooksPage(WebDriver driver) {
         super(driver);
-        PageFactory.initElements(driver, this);
     }
 }
