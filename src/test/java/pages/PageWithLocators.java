@@ -35,7 +35,7 @@ public class PageWithLocators extends  BasePage{
     @FindBy(xpath = ".//li[contains(@class, 'header-topline')][not(a)]")
     private WebElement unselectedLanguageButton;
 
-    @FindBy(xpath = ".//div[contains(@class, 'available')][not(contains(text(), 'Нет в наличии'))]")
+    @FindBy(xpath = ".//div[contains(@class, 'available')][not(contains(@class, 'unavailable'))]")
     private List<WebElement> availableProductList;
 
     //or
@@ -46,17 +46,17 @@ public class PageWithLocators extends  BasePage{
     private List<WebElement> headerTopLineButtonList;
 
     //and
-    @FindBy(xpath = ".//span[contains(@class, header) and contains(text(), 'Здравствуйте')]")
-    private WebElement greetingsForUser;
+    @FindBy(xpath = ".//app-rz-header[contains(@class, 'header-component') and (@style = 'display: block;')]")
+    private WebElement componentHeader;
 
     @FindBy(xpath = ".//button[@type = 'button' and contains(@class, 'microphone')]")
     private WebElement microphoneButton;
 
     //ancestor
-    @FindBy(xpath = ".//ancestor::li[contains(@class, 'links-item')]/a[contains(text(), 'Контакты')]")
+    @FindBy(xpath = ".//ancestor::li[contains(@class, 'links-item')]/a[contains(@href, 'contacts')]")
     private WebElement contacts;
 
-    @FindBy(xpath = ".//ancestor::li[contains(@class, 'links-item')]/a[contains(text(), 'Помощь')]")
+    @FindBy(xpath = ".//ancestor::li[contains(@class, 'links-item')]/a[contains(@href, 'help')]")
     private WebElement help;
 
     //parent
@@ -95,17 +95,17 @@ public class PageWithLocators extends  BasePage{
     private WebElement firmListFollowingPanasonicElement;
 
     //text
-    @FindBy(xpath = ".//button[contains(text(), 'Найти')]")
-    private WebElement searchButton;
+    @FindBy(xpath = ".//label[contains(text(), 'Rozetka')]")
+    private WebElement rosetkaSeller;
 
-    @FindBy(xpath = ".//li[contains(@class, 'links-item')]/a[contains(text(), 'ответ')]")
+    @FindBy(xpath = ".//li[contains(@class, 'links-item')]/a[contains(text(), 'COVID')]")
     private WebElement responseToCovid;
 
     //count (iphone page - https://rozetka.com.ua/ua/mobile-phones/c80003/producer=apple/#search_text=iphone)
     @FindBy(xpath = ".//label[count(@for) = 1 and @for = 'Huawei']")
     private WebElement huaweiFirmSelectButton;
 
-    @FindBy(xpath = ".//button[count(@type) = 0 and contains(@arial-label, 'Крупная')]")
+    @FindBy(xpath = ".//button[count(@type) = 0 and @class ='catalog-view__button']")
     private WebElement largeTileForViewProductListButton;
 
     //  |

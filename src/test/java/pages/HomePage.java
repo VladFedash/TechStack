@@ -19,7 +19,7 @@ public class HomePage extends BasePage {
     @FindBy(xpath = ".//a[@class = 'header__logo']")
     public WebElement siteLogo;
 
-    @FindBy(xpath = ".//a[@class ='menu__hidden-title'][contains(text(), 'Ноутбуки')]")
+    @FindBy(xpath = ".//a[@class ='menu__hidden-title'][not(contains(@href, 'preset=game')) and contains(@href, '/notebooks/')]")
     public WebElement notebooksPageOpenButton;
 
     @FindBy(xpath = ".//div[@class = 'js-rz-cart']//span[contains(@class, 'button-counter')]")
