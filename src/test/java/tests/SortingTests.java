@@ -4,6 +4,7 @@ import helpers.BaseOperations;
 import helpers.WaitUtils;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.Test;
 import pages.HomePage;
@@ -36,7 +37,7 @@ public class SortingTests extends BaseTest {
 
         Select objSelect = new Select(notebooksPage.sortedList);
         objSelect.selectByVisibleText(SORTING_BY_ASCENDING_KEYWORD);
-        driver.navigate().refresh();
+        waitUtils.waitForElementVisibility(5, searchResultsPage.sidebar);
         List<Integer> actualProductPriceList = new ArrayList<>();
 
         notebooksPage.productPriceList.forEach(productPrice ->{
@@ -60,7 +61,7 @@ public class SortingTests extends BaseTest {
 
         Select objSelect = new Select(notebooksPage.sortedList);
         objSelect.selectByVisibleText(SORTING_BY_DESCENDING_KEYWORD);
-        driver.navigate().refresh();
+        waitUtils.waitForElementVisibility(5, searchResultsPage.sidebar);
         List<Integer> actualProductPriceList = new ArrayList<>();
 
         notebooksPage.productPriceList.forEach(productPrice ->{
@@ -87,7 +88,7 @@ public class SortingTests extends BaseTest {
 
         waitUtils.waitForElementVisibility(5, notebooksPage.sortedList);
         baseOperations.clickButton(notebooksPage.acerFirmSelectButton);
-        driver.navigate().refresh();
+        waitUtils.waitForElementVisibility(5, searchResultsPage.sidebar);
 
         for (WebElement element : searchResultsPage.titleProductList) {
             assertTrue(element.getText().contains(CHOSEN_NOTEBOOK_FIRM));

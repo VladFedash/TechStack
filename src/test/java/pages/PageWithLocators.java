@@ -66,19 +66,19 @@ public class PageWithLocators extends  BasePage{
     @FindBy(xpath = ".//div[contains(@class, 'support')]/parent::div")
     private WebElement mainSupport;
 
-    //preceding
+    //preceding (iphone page - https://rozetka.com.ua/ua/mobile-phones/c80003/producer=apple/#search_text=iphone)
     @FindBy(xpath = ".//div[@class = 'layout']/preceding::h1")
     private WebElement productTitle;
 
     @FindBy(xpath = ".//div[@class = 'layout']/preceding::section[@class = 'js-bottom-text']")
     private WebElement bottomText;
 
-    //preceding-sibling (computers-notebooks page)
-    @FindBy(xpath = "(.//li[@class = 'portal-grid__cell'])[4]/preceding-sibling::li")
-    private List<WebElement> productListPrecedingFourthElement;
+    //preceding-sibling (computers-notebooks page - https://rozetka.com.ua/ua/computers-notebooks/c80253/)
+    @FindBy(xpath = ".//li[contains(text(), 'HP')]/preceding-sibling::li")
+    private List<WebElement> firmListPrecedingHpElement;
 
-    @FindBy(xpath = "(.//li[@class = 'portal-grid__cell'])[2]/preceding-sibling::li")
-    private WebElement firstProduct;
+    @FindBy(xpath = ".//li[contains(text(), 'Panasonic')]/preceding-sibling::li")
+    private WebElement firmListPrecedingPanasonicElement;
 
     //descendant
     @FindBy(xpath = ".//div[contains(@class, 'main-stores')]//descendant::a/img[@alt = 'Google Play']")
@@ -87,12 +87,12 @@ public class PageWithLocators extends  BasePage{
     @FindBy(xpath = ".//div[contains(@class, 'main-stores')]//descendant::a/img[@alt = 'AppStore']")
     private WebElement appStore;
 
-    //following-sibling
-    @FindBy(xpath = "(.//li[@class = 'portal-grid__cell'])[1]/following-sibling::li")
-    private List<WebElement> productListFollowingFirstElement;
+    //following-sibling (computers-notebooks page - https://rozetka.com.ua/ua/computers-notebooks/c80253/)
+    @FindBy(xpath = ".//li[contains(text(), 'HP')]/following-sibling::li")
+    private List<WebElement> firmListFollowingHpElement;
 
-    @FindBy(xpath = "(.//li[@class = 'portal-grid__cell'])[5]/following-sibling::li")
-    private WebElement lastProduct;
+    @FindBy(xpath = ".//li[contains(text(), 'Acer')]/following-sibling::li")
+    private WebElement firmListFollowingPanasonicElement;
 
     //text
     @FindBy(xpath = ".//button[contains(text(), 'Найти')]")
@@ -101,25 +101,42 @@ public class PageWithLocators extends  BasePage{
     @FindBy(xpath = ".//li[contains(@class, 'links-item')]/a[contains(text(), 'ответ')]")
     private WebElement responseToCovid;
 
-    //count
-    @FindBy(xpath = "//label[count(@for) = 1 and @for = 'Huawei']")
+    //count (iphone page - https://rozetka.com.ua/ua/mobile-phones/c80003/producer=apple/#search_text=iphone)
+    @FindBy(xpath = ".//label[count(@for) = 1 and @for = 'Huawei']")
     private WebElement huaweiFirmSelectButton;
 
-    @FindBy(xpath = "//button[count(@type) = 0 and contains(@arial-label, 'Крупная')]")
+    @FindBy(xpath = ".//button[count(@type) = 0 and contains(@arial-label, 'Крупная')]")
     private WebElement largeTileForViewProductListButton;
 
     //  |
     @FindBy(xpath = ".//input | .//class")
-    private WebElement searchFieldFindByOr;
+    private WebElement searchFieldFindByOrMethod;
 
     @FindBy(xpath = ".//a[@class = 'header-bottomline']| .//span[@class = 'menu-toggler__text']")
     private WebElement catalogButton;
 
-    // >=
+    // >= (iphone page - https://rozetka.com.ua/ua/mobile-phones/c80003/producer=apple/#search_text=iphone)
+    @FindBy(xpath = ".//div[contains(@class, 'tile__colors')]/ul[count(li)>=6]")
+    private List<WebElement> productListWithSixColorsCountAndMore;
 
-    // <=
+    //home page
+    @FindBy(xpath = ".//div[contains(@class, 'price_color')]/span[@class='tile__price-value'][number()>= 800]")
+    private List<WebElement> productListWithPriceMoreThanIndicated;
 
-    // mod
+    // <= (iphone page - https://rozetka.com.ua/ua/mobile-phones/c80003/producer=apple/#search_text=iphone)
+    @FindBy(xpath = ".//div[contains(@class, 'tile__colors')]/ul[count(li)<=2]  | .//div[contains(@class, 'tile__colors')][not(ul)]")
+    private List<WebElement> productListWithTwoColorsCountOrLess;
+
+    //home page
+    @FindBy(xpath = ".//div[contains(@class, 'price_color')]/span[@class='tile__price-value'][number()<= 100]")
+    private List<WebElement> productListWithPriceLessThanIndicated;
+
+    // mod (iphone page - https://rozetka.com.ua/ua/mobile-phones/c80003/producer=apple/#search_text=iphone)
+    @FindBy(xpath = ".//div[contains(@class, 'tile__colors')]/ul[ count(li) mod 3 = 0]")
+    private List<WebElement> productListWithDivisibleThreeColorsCount;
+
+    @FindBy(xpath = ".//div[contains(@class, 'tile__colors')]/ul[ count(li) mod 3 = 2]")
+    private List<WebElement> productListDivisibleThreeWithRemainderTwo;
 
     public PageWithLocators(WebDriver driver) {
         super(driver);
