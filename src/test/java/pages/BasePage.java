@@ -26,7 +26,6 @@ public class BasePage {
     })
     public WebElement banner;
 
-//    @FindBy(xpath = ".//li[contains(@class, 'language')]/a")
     public String languageLocator = ".//a[text() = '%s']";
 
     public BasePage(WebDriver driver) {
