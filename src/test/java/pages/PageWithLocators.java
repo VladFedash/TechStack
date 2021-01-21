@@ -6,7 +6,7 @@ import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
-public class PageWithLocators extends  BasePage{
+public class PageWithLocators extends BasePage {
 
     //Create separate class in solution and add at least 2 web elements located by xpath using following functions/operators
 

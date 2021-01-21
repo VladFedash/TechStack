@@ -4,7 +4,6 @@ import helpers.BaseOperations;
 import helpers.WaitUtils;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.Test;
 import pages.HomePage;
@@ -40,7 +39,7 @@ public class SortingTests extends BaseTest {
         waitUtils.waitForElementVisibility(5, searchResultsPage.sidebar);
         List<Integer> actualProductPriceList = new ArrayList<>();
 
-        notebooksPage.productPriceList.forEach(productPrice ->{
+        notebooksPage.productPriceList.forEach(productPrice -> {
             waitUtils.waitForElementVisibility(5, productPrice);
             actualProductPriceList.add(Integer.parseInt(productPrice.getText().replaceAll("[^0-9]", "")));
         });
@@ -64,7 +63,7 @@ public class SortingTests extends BaseTest {
         waitUtils.waitForElementVisibility(5, searchResultsPage.sidebar);
         List<Integer> actualProductPriceList = new ArrayList<>();
 
-        notebooksPage.productPriceList.forEach(productPrice ->{
+        notebooksPage.productPriceList.forEach(productPrice -> {
             waitUtils.waitForElementVisibility(5, productPrice);
             actualProductPriceList.add(Integer.parseInt(productPrice.getText().replaceAll("[^0-9]", "")));
         });
