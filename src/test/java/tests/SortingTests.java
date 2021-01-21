@@ -36,14 +36,13 @@ public class SortingTests extends BaseTest {
 
         Select objSelect = new Select(notebooksPage.sortedList);
         objSelect.selectByVisibleText(SORTING_BY_ASCENDING_KEYWORD);
-        driver.navigate().refresh();
+        waitUtils.waitForElementVisibility(5, searchResultsPage.sidebar);
         List<Integer> actualProductPriceList = new ArrayList<>();
 
-        for (int i = 0; i < notebooksPage.productPriceList.size(); i++) {
-            waitUtils.waitForElementVisibility(5, notebooksPage.productPriceList.get(i));
-            actualProductPriceList.add(Integer.parseInt(notebooksPage.productPriceList.get(i)
-                    .getText().replaceAll("[^0-9]", "")));
-        }
+        notebooksPage.productPriceList.forEach(productPrice -> {
+            waitUtils.waitForElementVisibility(5, productPrice);
+            actualProductPriceList.add(Integer.parseInt(productPrice.getText().replaceAll("[^0-9]", "")));
+        });
 
         List<Integer> expectedProductPriceList = new ArrayList<>(actualProductPriceList);
         Collections.sort(expectedProductPriceList);
@@ -61,14 +60,13 @@ public class SortingTests extends BaseTest {
 
         Select objSelect = new Select(notebooksPage.sortedList);
         objSelect.selectByVisibleText(SORTING_BY_DESCENDING_KEYWORD);
-        driver.navigate().refresh();
+        waitUtils.waitForElementVisibility(5, searchResultsPage.sidebar);
         List<Integer> actualProductPriceList = new ArrayList<>();
 
-        for (int i = 0; i < notebooksPage.productPriceList.size(); i++) {
-            waitUtils.waitForElementVisibility(10, notebooksPage.productPriceList.get(i));
-            actualProductPriceList.add(Integer.parseInt(notebooksPage.productPriceList.get(i)
-                    .getText().replaceAll("[^0-9]", "")));
-        }
+        notebooksPage.productPriceList.forEach(productPrice -> {
+            waitUtils.waitForElementVisibility(5, productPrice);
+            actualProductPriceList.add(Integer.parseInt(productPrice.getText().replaceAll("[^0-9]", "")));
+        });
 
         List<Integer> expectedProductPriceList = new ArrayList<>(actualProductPriceList);
         expectedProductPriceList.sort(Collections.reverseOrder());
@@ -89,7 +87,7 @@ public class SortingTests extends BaseTest {
 
         waitUtils.waitForElementVisibility(5, notebooksPage.sortedList);
         baseOperations.clickButton(notebooksPage.acerFirmSelectButton);
-        driver.navigate().refresh();
+        waitUtils.waitForElementVisibility(5, searchResultsPage.sidebar);
 
         for (WebElement element : searchResultsPage.titleProductList) {
             assertTrue(element.getText().contains(CHOSEN_NOTEBOOK_FIRM));

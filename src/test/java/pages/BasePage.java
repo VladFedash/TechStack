@@ -1,7 +1,9 @@
 package pages;
 
+import enums.Languages;
 import helpers.BaseOperations;
 import helpers.WaitUtils;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
@@ -22,6 +24,8 @@ public class BasePage {
     })
     public WebElement banner;
 
+    public String languageLocator = ".//a[text() = '%s']";
+
     public BasePage(WebDriver driver) {
         this.driver = driver;
         baseOperations = new BaseOperations(driver);
@@ -32,5 +36,12 @@ public class BasePage {
     public void closeAdPopup() {
         if (waitUtils.elementIsVisible(10, banner))
             baseOperations.clickButton(closeAdButton);
+    }
+
+    public void setAppLanguage(Languages language) {
+        switch (language) {
+            case RU -> baseOperations.clickButton(By.xpath(String.format(languageLocator, Languages.RU)));
+            case UA -> baseOperations.clickButton(By.xpath(String.format(languageLocator, Languages.UA)));
+        }
     }
 }
