@@ -1,5 +1,6 @@
 package pages;
 
+import helpers.WaitUtils;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,7 +9,9 @@ import org.openqa.selenium.support.FindBy;
 import java.util.List;
 
 public class HomePage extends BasePage {
-    @FindBy(xpath = ".//input[contains(@class, 'search-form')]")
+    WaitUtils waitUtils = new WaitUtils(driver);
+
+    @FindBy(xpath = ".//input[@name = 'search']")
     public WebElement searchField;
 
     @FindBy(xpath = ".//button[@class = 'menu-toggler']")
@@ -58,6 +61,7 @@ public class HomePage extends BasePage {
     }
 
     public void inputToSearchFieldAndPressEnter(String keyword) {
+        waitUtils.waitForElementVisibilityShort(searchField);
         searchField.sendKeys(keyword, Keys.ENTER);
     }
 }

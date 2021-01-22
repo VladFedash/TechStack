@@ -68,7 +68,7 @@ public class PageWithLocators extends BasePage {
 
     //preceding (iphone page - https://rozetka.com.ua/ua/mobile-phones/c80003/producer=apple/#search_text=iphone)
     @FindBy(xpath = ".//div[@class = 'layout']/preceding::h1")
-    private WebElement productTitle;
+    public WebElement productTitle;
 
     @FindBy(xpath = ".//div[@class = 'layout']/preceding::section[@class = 'js-bottom-text']")
     private WebElement bottomText;
@@ -105,7 +105,7 @@ public class PageWithLocators extends BasePage {
     @FindBy(xpath = ".//label[count(@for) = 1 and @for = 'Huawei']")
     private WebElement huaweiFirmSelectButton;
 
-    @FindBy(xpath = ".//button[count(@type) = 0 and @class ='catalog-view__button']")
+    @FindBy(xpath = ".//button[count(@arial-label) = 1 and @class ='catalog-view__button']")
     private WebElement largeTileForViewProductListButton;
 
     //  |

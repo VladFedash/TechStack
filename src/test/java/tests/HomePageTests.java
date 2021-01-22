@@ -17,7 +17,7 @@ public class HomePageTests extends BaseTest {
     @Test
     public void checkAbilityChangeCityLocation() {
         baseOperations.clickButton(homePage.changeCitiesButton);
-        waitUtils.waitForElementVisibility(5, homePage.modalHeader);
+        waitUtils.waitForElementVisibilityShort(homePage.modalHeader);
 
         Random rand = new Random();
         int randomCity = rand.nextInt(homePage.popularCityList.size());
@@ -26,7 +26,7 @@ public class HomePageTests extends BaseTest {
         homePage.popularCityList.get(randomCity).click();
         assertFalse(homePage.acceptCityChoiceButton.isSelected());
         baseOperations.clickButton(homePage.acceptCityChoiceButton);
-        waitUtils.waitForElementVisibility(5, homePage.changeCitiesButton);
+        waitUtils.waitForElementVisibilityShort(homePage.changeCitiesButton);
         assertEquals(actualResult, homePage.changeCitiesButton.getText());
     }
 

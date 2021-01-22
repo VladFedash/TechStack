@@ -34,7 +34,7 @@ public class BasePage {
     }
 
     public void closeAdPopup() {
-        if (waitUtils.elementIsVisible(10, banner))
+        if (waitUtils.elementIsVisible(banner))
             baseOperations.clickButton(closeAdButton);
     }
 

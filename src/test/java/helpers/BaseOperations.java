@@ -11,12 +11,12 @@ public class BaseOperations extends WaitUtils {
     }
 
     public void clickButton(WebElement element) {
-        waitForElementVisibility(5, element);
+        waitForElementToBeClickableShort(element);
         element.click();
     }
 
     public void clickButton(By by) {
-        waitForElementVisibility(2, driver.findElement(by));
+        waitForElementVisibilityShort(driver.findElement(by));
         driver.findElement(by).click();
     }
 }

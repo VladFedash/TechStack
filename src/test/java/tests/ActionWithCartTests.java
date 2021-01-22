@@ -5,6 +5,7 @@ import helpers.WaitUtils;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Wait;
 import org.testng.annotations.Test;
 import pages.BasePage;
 import pages.HomePage;
@@ -34,7 +35,7 @@ public class ActionWithCartTests extends BaseTest {
                 .sendKeys(homePage.searchField, NOKIA_SEARCH_WORD, Keys.ENTER)
                 .perform();
         baseOperations.clickButton(searchResultsPage.addProductInCartButton.get(0));
-        waitUtils.waitForElementVisibility(5, homePage.productCountInCart);
+        waitUtils.waitForElementVisibilityShort(homePage.productCountInCart);
         int actualResult = Integer.parseInt(homePage.productCountInCart.getText().trim());
         assertEquals(actualResult, EXPECTED_AMOUNT_OF_PRODUCTS_IN_CART_AFTER_ADD);
     }
@@ -48,13 +49,13 @@ public class ActionWithCartTests extends BaseTest {
                 .sendKeys(homePage.searchField, NOKIA_SEARCH_WORD, Keys.ENTER)
                 .perform();
         baseOperations.clickButton(searchResultsPage.addProductInCartButton.get(0));
-        waitUtils.waitForElementVisibility(5, homePage.productCountInCart);
+        waitUtils.waitForElementVisibilityShort(homePage.productCountInCart);
 
         baseOperations.clickButton(searchResultsPage.addProductInCartButton.get(0));
         baseOperations.clickButton(homePage.contextMenuButton);
         baseOperations.clickButton(homePage.deleteProductFromCartButton);
 
-        waitUtils.waitForElementVisibility(5, homePage.emptyCartMessage);
+        waitUtils.waitForElementVisibilityShort(homePage.emptyCartMessage);
         String actualResult = homePage.emptyCartMessage.getText();
         assertEquals(actualResult, EXPECTED_CART_EMPTY_MESSAGE_RU);
     }
@@ -65,15 +66,16 @@ public class ActionWithCartTests extends BaseTest {
         homePage.inputToSearchFieldAndPressEnter(XIOMI_SEARCH_WORD);
         basePage.closeAdPopup();
 
+        waitUtils.waitForVisibilityOfAllElements(searchResultsPage.addProductInCartButton);
         searchResultsPage.clickAddVisibleProductInCartButton();
-        waitUtils.waitForElementVisibility(30, homePage.productCountInCart);
+        waitUtils.waitForElementVisibilityLong(homePage.productCountInCart);
         baseOperations.clickButton(homePage.openCartButton);
 
-        waitUtils.waitForElementVisibility(15, homePage.totalProductPriceInCart);
+        waitUtils.waitForElementVisibilityLong(homePage.totalProductPriceInCart);
 
         for (WebElement element : homePage.productPriceListInCart) {
             assertTrue(element.isEnabled());
-            waitUtils.waitForElementVisibility(5, element);
+            waitUtils.waitForElementVisibilityShort(element);
             expectedResult += Integer.parseInt(element.getText().replaceAll("[^0-9]", ""));
         }
 
