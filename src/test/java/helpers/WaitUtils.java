@@ -1,22 +1,15 @@
 package helpers;
 
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import enums.WaitTimes;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.*;
 
 import java.time.Duration;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class WaitUtils {
     WebDriver driver;
-    private static final int SHORT_WAITING_TIME = 5;
-    private static final int MIDDLE_WAITING_TIME = 10;
-    private static final int LONG_WAITING_TIME = 15;
     private static final int FREQUENCY = 5;
-
 
     public WaitUtils(WebDriver driver) {
         this.driver = driver;
@@ -28,15 +21,15 @@ public class WaitUtils {
     }
 
     public void waitForElementVisibilityShort(WebElement element) {
-        waitForElementVisibility(SHORT_WAITING_TIME, element);
+        waitForElementVisibility(WaitTimes.SHORT.getValue(), element);
     }
 
     public void waitForElementVisibilityMiddle(WebElement element) {
-        waitForElementVisibility(MIDDLE_WAITING_TIME, element);
+        waitForElementVisibility(WaitTimes.MIDDLE.getValue(), element);
     }
 
     public void waitForElementVisibilityLong(WebElement element) {
-        waitForElementVisibility(LONG_WAITING_TIME, element);
+        waitForElementVisibility(WaitTimes.LONG.getValue(), element);
     }
 
     public void waitForElementToBeClickable(long timeout, WebElement element) {
@@ -45,26 +38,30 @@ public class WaitUtils {
     }
 
     public void waitForElementToBeClickableShort(WebElement element) {
-        waitForElementToBeClickable(SHORT_WAITING_TIME, element);
+        waitForElementToBeClickable(WaitTimes.SHORT.getValue(), element);
     }
 
-    public void waitForUrl(long timeout, String str) {
+    public void waitForElementInvisibility(long timeout, By by) {
         WebDriverWait wait = new WebDriverWait(driver, timeout);
-        wait.until(ExpectedConditions.urlContains(str));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
     }
 
-    public void waitForUrlLong(String str) {
-        waitForUrl(LONG_WAITING_TIME, str);
+    public void waitForElementInvisibilityShort(By by){
+        waitForElementInvisibility(WaitTimes.SHORT.getValue(), by);
     }
 
-    public void waitForWindowNumber(int numberOfWindows) {
-        WebDriverWait wait = new WebDriverWait(driver, SHORT_WAITING_TIME);
-        wait.until(ExpectedConditions.numberOfWindowsToBe(numberOfWindows));
+    public void waitForElementPresence(long timeout, By by){
+        WebDriverWait wait = new WebDriverWait(driver, timeout);
+        wait.until(ExpectedConditions.presenceOfElementLocated(by));
+    }
+
+    public void waitForElementPresenceShort(By by){
+        waitForElementPresence(WaitTimes.SHORT.getValue(), by);
     }
 
     public void waitForVisibilityOfAllElements(List<WebElement> elements) {
         Wait<WebDriver> fluentWait = new FluentWait<>(driver)
-                .withTimeout(Duration.ofSeconds(LONG_WAITING_TIME))
+                .withTimeout(Duration.ofSeconds(WaitTimes.LONG.getValue()))
                 .pollingEvery(Duration.ofSeconds(FREQUENCY))
                 .ignoring(NoSuchElementException.class);
         fluentWait.until(ExpectedConditions.visibilityOfAllElements(elements));

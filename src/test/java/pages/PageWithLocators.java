@@ -15,11 +15,11 @@ public class PageWithLocators extends BasePage {
     private WebElement cityButton;
 
     @FindBy(xpath = ".//input[contains(@class, 'search-form')]")
-    public WebElement searchField;
+    private WebElement searchField;
 
     //starts-with
     @FindBy(xpath = ".//span[starts-with(@class, 'm') and contains(@class, 'toggler')]")
-    public WebElement catalog;
+    private WebElement catalog;
 
     @FindBy(xpath = ".//a[starts-with(text(), 'U')]")
     private WebElement uaLanguageButton;
