@@ -37,7 +37,7 @@ public class BasePage {
     public void closeAdPopup() {
         if (waitUtils.elementIsVisible(banner)) {
             baseOperations.clickButton(closeAdButton);
-            waitUtils.waitForElementInvisibilityShort(By.xpath(LOCATOR_FOR_BANNER));
+            waitUtils.waitForElementInvisibilityAfterShortWait(By.xpath(LOCATOR_FOR_BANNER));
         }
     }
 

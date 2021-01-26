@@ -20,15 +20,15 @@ public class WaitUtils {
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 
-    public void waitForElementVisibilityShort(WebElement element) {
+    public void waitForElementVisibilityAfterShortWait(WebElement element) {
         waitForElementVisibility(WaitTimes.SHORT.getValue(), element);
     }
 
-    public void waitForElementVisibilityMiddle(WebElement element) {
+    public void waitForElementVisibilityAfterMiddleWait(WebElement element) {
         waitForElementVisibility(WaitTimes.MIDDLE.getValue(), element);
     }
 
-    public void waitForElementVisibilityLong(WebElement element) {
+    public void waitForElementVisibilityAfterLongWait(WebElement element) {
         waitForElementVisibility(WaitTimes.LONG.getValue(), element);
     }
 
@@ -37,7 +37,7 @@ public class WaitUtils {
         wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
-    public void waitForElementToBeClickableShort(WebElement element) {
+    public void waitForElementToBeClickableAfterShortWait(WebElement element) {
         waitForElementToBeClickable(WaitTimes.SHORT.getValue(), element);
     }
 
@@ -46,7 +46,7 @@ public class WaitUtils {
         wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
     }
 
-    public void waitForElementInvisibilityShort(By by){
+    public void waitForElementInvisibilityAfterShortWait(By by){
         waitForElementInvisibility(WaitTimes.SHORT.getValue(), by);
     }
 
@@ -55,7 +55,7 @@ public class WaitUtils {
         wait.until(ExpectedConditions.presenceOfElementLocated(by));
     }
 
-    public void waitForElementPresenceShort(By by){
+    public void waitForElementPresenceAfterShortWait(By by){
         waitForElementPresence(WaitTimes.SHORT.getValue(), by);
     }
 
@@ -69,7 +69,7 @@ public class WaitUtils {
 
     public boolean elementIsVisible(WebElement element) {
         try {
-            waitForElementVisibilityMiddle(element);
+            waitForElementVisibilityAfterMiddleWait(element);
             return true;
         } catch (NoSuchElementException | TimeoutException exception) {
             return false;

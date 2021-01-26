@@ -1,8 +1,8 @@
 package enums;
 
 public enum WaitTimes {
-    SHORT(5),
-    MIDDLE(10),
+    SHORT(3),
+    MIDDLE(7),
     LONG(15);
 
     private final int waitTime;

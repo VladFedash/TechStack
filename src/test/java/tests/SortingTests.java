@@ -32,15 +32,15 @@ public class SortingTests extends BaseTest {
     public void checkCorrectSortingProductAscending() {
         baseOperations.clickButton(homePage.catalog);
         baseOperations.clickButton(homePage.notebooksPageOpenButton);
-        waitUtils.waitForElementVisibilityShort(notebooksPage.sortedList);
+        waitUtils.waitForElementVisibilityAfterShortWait(notebooksPage.sortedList);
 
         Select objSelect = new Select(notebooksPage.sortedList);
         objSelect.selectByVisibleText(SORTING_BY_ASCENDING_KEYWORD);
-        waitUtils.waitForElementVisibilityShort(searchResultsPage.sidebar);
+        waitUtils.waitForElementVisibilityAfterShortWait(searchResultsPage.sidebar);
         List<Integer> actualProductPriceList = new ArrayList<>();
 
         notebooksPage.productPriceList.forEach(productPrice -> {
-            waitUtils.waitForElementVisibilityShort(productPrice);
+            waitUtils.waitForElementVisibilityAfterShortWait(productPrice);
             actualProductPriceList.add(Integer.parseInt(productPrice.getText().replaceAll("[^0-9]", "")));
         });
 
@@ -56,15 +56,15 @@ public class SortingTests extends BaseTest {
     public void checkCorrectSortingProductDescending() {
         baseOperations.clickButton(homePage.catalog);
         baseOperations.clickButton(homePage.notebooksPageOpenButton);
-        waitUtils.waitForElementVisibilityShort(notebooksPage.sortedList);
+        waitUtils.waitForElementVisibilityAfterShortWait(notebooksPage.sortedList);
 
         Select objSelect = new Select(notebooksPage.sortedList);
         objSelect.selectByVisibleText(SORTING_BY_DESCENDING_KEYWORD);
-        waitUtils.waitForElementVisibilityShort(searchResultsPage.sidebar);
+        waitUtils.waitForElementVisibilityAfterShortWait(searchResultsPage.sidebar);
         List<Integer> actualProductPriceList = new ArrayList<>();
 
         notebooksPage.productPriceList.forEach(productPrice -> {
-            waitUtils.waitForElementVisibilityShort(productPrice);
+            waitUtils.waitForElementVisibilityAfterShortWait(productPrice);
             actualProductPriceList.add(Integer.parseInt(productPrice.getText().replaceAll("[^0-9]", "")));
         });
 
@@ -80,14 +80,14 @@ public class SortingTests extends BaseTest {
     public void checkCorrectSortingProductByFirmName() {
         baseOperations.clickButton(homePage.catalog);
         baseOperations.clickButton(homePage.notebooksPageOpenButton);
-        waitUtils.waitForElementVisibilityShort(notebooksPage.acerFirmSelectButton);
+        waitUtils.waitForElementVisibilityAfterShortWait(notebooksPage.acerFirmSelectButton);
 
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollBy(0,400)");
 
-        waitUtils.waitForElementVisibilityShort(notebooksPage.sortedList);
+        waitUtils.waitForElementVisibilityAfterShortWait(notebooksPage.sortedList);
         baseOperations.clickButton(notebooksPage.acerFirmSelectButton);
-        waitUtils.waitForElementVisibilityShort(searchResultsPage.sidebar);
+        waitUtils.waitForElementVisibilityAfterShortWait(searchResultsPage.sidebar);
 
         for (WebElement element : searchResultsPage.titleProductList) {
             assertTrue(element.getText().contains(CHOSEN_NOTEBOOK_FIRM));

@@ -40,7 +40,7 @@ public class SearchResultTests extends BaseTest {
     public void checkCorrectElementsAmountOnSearchPage() {
         homePage.searchField.submit();
         homePage.inputToSearchFieldAndPressEnter(SEARCH_WORD_IPHONE);
-        waitUtils.waitForElementPresenceShort(By.xpath(PRODUCT_AMOUNT_LOCATOR));
+        waitUtils.waitForElementPresenceAfterShortWait(By.xpath(PRODUCT_AMOUNT_LOCATOR));
         int expectedResult = Integer.parseInt(searchResultsPage.productAmountOnPage
                 .getText().replaceAll("[^0-9]", ""));
         assertEquals(searchResultsPage.titleProductList.size(), expectedResult);
@@ -49,7 +49,7 @@ public class SearchResultTests extends BaseTest {
     @Test
     public void checkSearchForNoMatches() {
         homePage.inputToSearchFieldAndPressEnter(SEARCH_NON_EXISTENT_KEYWORD);
-        waitUtils.waitForElementVisibilityShort(searchResultsPage.massageAboutNoMatches);
+        waitUtils.waitForElementVisibilityAfterShortWait(searchResultsPage.massageAboutNoMatches);
         String actualResult = searchResultsPage.massageAboutNoMatches.getText();
         assertEquals(actualResult, EXPECTED_NO_MATCHES_MESSAGE);
     }
