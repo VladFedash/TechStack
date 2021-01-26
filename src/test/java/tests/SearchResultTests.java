@@ -1,5 +1,6 @@
 package tests;
 
+import helpers.BaseOperations;
 import helpers.WaitUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -22,6 +23,7 @@ public class SearchResultTests extends BaseTest {
     WaitUtils waitUtils = new WaitUtils(driver);
     HomePage homePage = new HomePage(driver);
     SearchResultsPage searchResultsPage = new SearchResultsPage(driver);
+    BaseOperations baseOperations = new BaseOperations(driver);
 
     @Test
     public void checkSearchResultsContainsWordIphone() {
@@ -41,8 +43,7 @@ public class SearchResultTests extends BaseTest {
         homePage.searchField.submit();
         homePage.inputToSearchFieldAndPressEnter(SEARCH_WORD_IPHONE);
         waitUtils.waitForElementPresenceAfterShortWait(By.xpath(PRODUCT_AMOUNT_LOCATOR));
-        int expectedResult = Integer.parseInt(searchResultsPage.productAmountOnPage
-                .getText().replaceAll("[^0-9]", ""));
+        int expectedResult = baseOperations.getProductPriceWithNumericalSymbols(searchResultsPage.productAmountOnPage);
         assertEquals(searchResultsPage.titleProductList.size(), expectedResult);
     }
 

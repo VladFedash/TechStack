@@ -20,6 +20,9 @@ public class SearchResultsPage extends BasePage {
     @FindBy(xpath = ".//button[contains(@class, 'buy-button')]")
     public List<WebElement> addProductInCartButton;
 
+    @FindBy(xpath = ".//span[contains(@class, 'price-value')]")
+    public List<WebElement> productPriceList;
+
     @FindBy(xpath = "//div[contains(@class, 'with_sidebar')]")
     public WebElement sidebar;
 

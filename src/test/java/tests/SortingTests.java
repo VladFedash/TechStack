@@ -39,9 +39,9 @@ public class SortingTests extends BaseTest {
         waitUtils.waitForElementVisibilityAfterShortWait(searchResultsPage.sidebar);
         List<Integer> actualProductPriceList = new ArrayList<>();
 
-        notebooksPage.productPriceList.forEach(productPrice -> {
+        searchResultsPage.productPriceList.forEach(productPrice -> {
             waitUtils.waitForElementVisibilityAfterShortWait(productPrice);
-            actualProductPriceList.add(Integer.parseInt(productPrice.getText().replaceAll("[^0-9]", "")));
+            actualProductPriceList.add(baseOperations.getProductPriceWithNumericalSymbols(productPrice));
         });
 
         List<Integer> expectedProductPriceList = new ArrayList<>(actualProductPriceList);
@@ -63,9 +63,9 @@ public class SortingTests extends BaseTest {
         waitUtils.waitForElementVisibilityAfterShortWait(searchResultsPage.sidebar);
         List<Integer> actualProductPriceList = new ArrayList<>();
 
-        notebooksPage.productPriceList.forEach(productPrice -> {
+        searchResultsPage.productPriceList.forEach(productPrice -> {
             waitUtils.waitForElementVisibilityAfterShortWait(productPrice);
-            actualProductPriceList.add(Integer.parseInt(productPrice.getText().replaceAll("[^0-9]", "")));
+            actualProductPriceList.add(baseOperations.getProductPriceWithNumericalSymbols(productPrice));
         });
 
         List<Integer> expectedProductPriceList = new ArrayList<>(actualProductPriceList);

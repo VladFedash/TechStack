@@ -9,6 +9,8 @@ import org.testng.annotations.Test;
 import pages.BasePage;
 import pages.HomePage;
 import pages.SearchResultsPage;
+import values.Item;
+import values.ProductDTO;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -33,8 +35,10 @@ public class ActionWithCartTests extends BaseTest {
                 .keyDown(homePage.searchField, Keys.SHIFT)
                 .sendKeys(homePage.searchField, NOKIA_SEARCH_WORD, Keys.ENTER)
                 .perform();
+        waitUtils.waitForVisibilityOfAllElements(searchResultsPage.addProductInCartButton);
         baseOperations.clickButton(searchResultsPage.addProductInCartButton.get(0));
         waitUtils.waitForElementVisibilityAfterShortWait(homePage.productCountInCart);
+
         int actualResult = Integer.parseInt(homePage.productCountInCart.getText().trim());
         assertEquals(actualResult, EXPECTED_AMOUNT_OF_PRODUCTS_IN_CART_AFTER_ADD);
     }
@@ -50,7 +54,7 @@ public class ActionWithCartTests extends BaseTest {
         baseOperations.clickButton(searchResultsPage.addProductInCartButton.get(0));
         waitUtils.waitForElementVisibilityAfterShortWait(homePage.productCountInCart);
 
-        baseOperations.clickButton(searchResultsPage.addProductInCartButton.get(0));
+        baseOperations.clickButton(homePage.openCartButton);
         baseOperations.clickButton(homePage.contextMenuButton);
         baseOperations.clickButton(homePage.deleteProductFromCartButton);
 
@@ -61,24 +65,21 @@ public class ActionWithCartTests extends BaseTest {
 
     @Test
     public void checkSubtotalElementsInCart() {
-        int expectedResult = 0;
+        ProductDTO productDTO = new ProductDTO();
         homePage.inputToSearchFieldAndPressEnter(XIOMI_SEARCH_WORD);
         basePage.closeAdPopup();
 
         waitUtils.waitForVisibilityOfAllElements(searchResultsPage.addProductInCartButton);
         searchResultsPage.clickAddVisibleProductInCartButton();
         waitUtils.waitForElementVisibilityAfterLongWait(homePage.productCountInCart);
+        for (WebElement element : searchResultsPage.productPriceList) {
+            assertTrue(element.isEnabled());
+            productDTO.addItem(new Item(baseOperations.getProductPriceWithNumericalSymbols(element)));
+        }
         baseOperations.clickButton(homePage.openCartButton);
-
         waitUtils.waitForElementVisibilityAfterLongWait(homePage.totalProductPriceInCart);
 
-        for (WebElement element : homePage.productPriceListInCart) {
-            assertTrue(element.isEnabled());
-            waitUtils.waitForElementVisibilityAfterShortWait(element);
-            expectedResult += Integer.parseInt(element.getText().replaceAll("[^0-9]", ""));
-        }
-
-        int actualResult = Integer.parseInt(homePage.totalProductPriceInCart.getText().replaceAll("[^0-9]", ""));
-        assertEquals(actualResult, expectedResult);
+        int actualResult = baseOperations.getProductPriceWithNumericalSymbols(homePage.totalProductPriceInCart);
+        assertEquals(actualResult, productDTO.subtotal);
     }
 }

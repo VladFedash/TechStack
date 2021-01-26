@@ -64,4 +64,5 @@ public class HomePage extends BasePage {
         waitUtils.waitForElementVisibilityAfterShortWait(searchField);
         searchField.sendKeys(keyword, Keys.ENTER);
     }
+
 }
