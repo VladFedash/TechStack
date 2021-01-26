@@ -12,6 +12,7 @@ import org.openqa.selenium.support.PageFactory;
 
 public class BasePage {
     WebDriver driver;
+    public static final String LOCATOR_FOR_BANNER = "//a[contains(@class ,'exponea-animate')]";
     private final BaseOperations baseOperations;
     private final WaitUtils waitUtils;
 
@@ -20,7 +21,7 @@ public class BasePage {
 
     @FindAll({
             @FindBy(id = "rz-banner"),
-            @FindBy(xpath = "//a[contains(@class ,'exponea-animate')]")
+            @FindBy(xpath = LOCATOR_FOR_BANNER)
     })
     public WebElement banner;
 
@@ -34,8 +35,10 @@ public class BasePage {
     }
 
     public void closeAdPopup() {
-        if (waitUtils.elementIsVisible(10, banner))
+        if (waitUtils.elementIsVisible(banner)) {
             baseOperations.clickButton(closeAdButton);
+            waitUtils.waitForElementInvisibilityAfterShortWait(By.xpath(LOCATOR_FOR_BANNER));
+        }
     }
 
     public void setAppLanguage(Languages language) {
