@@ -16,8 +16,7 @@ public class SearchResultTests extends BaseTest {
     private static final String SEARCH_WORD_IPHONE = "iphone";
     private static final String SEARCH_WORD_PHONE = "phone";
     private static final String SEARCH_NON_EXISTENT_KEYWORD = "non existent request";
-    private static final String EXPECTED_NO_MATCHES_MESSAGE = "По запросу\n" + "«" + SEARCH_NON_EXISTENT_KEYWORD + "»" + "\n"
-            + "ничего не найдено, попробуйте изменить запрос";
+    private static final String EXPECTED_NO_MATCHES_MESSAGE = "По заданным параметрам не найдена ни одна модель";
     public static final String PRODUCT_AMOUNT_LOCATOR = ".//p[@class = 'catalog-selection__label']";
 
     WaitUtils waitUtils = new WaitUtils(driver);
@@ -50,7 +49,7 @@ public class SearchResultTests extends BaseTest {
     @Test
     public void checkSearchForNoMatches() {
         homePage.inputToSearchFieldAndPressEnter(SEARCH_NON_EXISTENT_KEYWORD);
-        waitUtils.waitForElementVisibilityAfterShortWait(searchResultsPage.massageAboutNoMatches);
+        waitUtils.waitForElementVisibilityAfterMiddleWait(searchResultsPage.massageAboutNoMatches);
         String actualResult = searchResultsPage.massageAboutNoMatches.getText();
         assertEquals(actualResult, EXPECTED_NO_MATCHES_MESSAGE);
     }

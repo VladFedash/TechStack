@@ -38,9 +38,6 @@ public class HomePage extends BasePage {
     @FindBy(xpath = ".//div[@class = 'js-rz-cart']")
     public WebElement openCartButton;
 
-    @FindBy(xpath = ".//div[@class = 'cart-product__coast']")
-    public List<WebElement> productPriceListInCart;
-
     @FindBy(xpath = ".//div[contains(@class, 'sum-price')]")
     public WebElement totalProductPriceInCart;
 

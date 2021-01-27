@@ -14,7 +14,7 @@ public class SearchResultsPage extends BasePage {
     @FindBy(xpath = ".//p[@class = 'catalog-selection__label']")
     public WebElement productAmountOnPage;
 
-    @FindBy(xpath = ".//div[@class = 'search-nothing__wrap']")
+    @FindBy(xpath = ".//rz-empty")
     public WebElement massageAboutNoMatches;
 
     @FindBy(xpath = ".//button[contains(@class, 'buy-button')]")
