@@ -9,7 +9,7 @@ import java.util.List;
 
 public class WaitUtils {
     WebDriver driver;
-    private static final int FREQUENCY = 5;
+    private static final int FREQUENCY = 3;
 
     public WaitUtils(WebDriver driver) {
         this.driver = driver;
@@ -37,8 +37,8 @@ public class WaitUtils {
         wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
-    public void waitForElementToBeClickableAfterShortWait(WebElement element) {
-        waitForElementToBeClickable(WaitTimes.SHORT.getValue(), element);
+    public void waitForElementToBeClickableAfterMiddleWait(WebElement element) {
+        waitForElementToBeClickable(WaitTimes.MIDDLE.getValue(), element);
     }
 
     public void waitForElementInvisibility(long timeout, By by) {

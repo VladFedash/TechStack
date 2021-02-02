@@ -3,15 +3,15 @@ package helpers;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 public class BaseOperations extends WaitUtils {
-    private static final String NUMERICAL_SYMBOLS = "[^0-9]";
     public BaseOperations(WebDriver driver) {
         super(driver);
     }
 
     public void clickButton(WebElement element) {
-        waitForElementToBeClickableAfterShortWait(element);
+        waitForElementToBeClickableAfterMiddleWait(element);
         element.click();
     }
 
@@ -20,7 +20,12 @@ public class BaseOperations extends WaitUtils {
         driver.findElement(by).click();
     }
 
-    public int getProductPriceWithNumericalSymbols(WebElement element){
-        return Integer.parseInt(element.getText().replaceAll(NUMERICAL_SYMBOLS, ""));
+    public int getProductPrice(WebElement element){
+        return Integer.parseInt(element.getText().replaceAll("[^0-9]", ""));
+    }
+
+    public void selectByDropdownText(WebElement element, String sortingBy){
+        Select objSelect = new Select(element);
+        objSelect.selectByVisibleText(sortingBy);
     }
 }

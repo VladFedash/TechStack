@@ -20,13 +20,13 @@ public class HomePage extends BasePage {
     @FindBy(xpath = ".//a[@class = 'header__logo']")
     public WebElement siteLogo;
 
-    @FindBy(xpath = ".//a[@class ='menu__hidden-title'][not(contains(@href, 'preset=game')) and contains(@href, '/notebooks/')]")
+    @FindBy(xpath = ".//a[@class ='menu__hidden-title'][contains(@href, '/notebooks/')][not(contains(@href, 'preset=game'))]")
     public WebElement notebooksPageOpenButton;
 
     @FindBy(xpath = ".//div[@class = 'js-rz-cart']//span[contains(@class, 'button-counter')]")
     public WebElement productCountInCart;
 
-    @FindBy(xpath = ".//button[contains(@class, 'context-menu__toggle')]")
+    @FindBy(xpath = ".//button[@id = 'cartProductActions0']")
     public WebElement contextMenuButton;
 
     @FindBy(xpath = ".//button[contains(@class, 'context-menu-actions')]")

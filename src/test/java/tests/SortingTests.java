@@ -1,10 +1,9 @@
 package tests;
 
+import helpers.ActionsByJavaScript;
 import helpers.BaseOperations;
 import helpers.WaitUtils;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.NotebooksPage;
@@ -20,77 +19,93 @@ import static org.testng.Assert.assertTrue;
 public class SortingTests extends BaseTest {
     private static final String SORTING_BY_ASCENDING_KEYWORD = "От дешевых к дорогим";
     private static final String SORTING_BY_DESCENDING_KEYWORD = "От дорогих к дешевым";
-    private static final String CHOSEN_NOTEBOOK_FIRM = "Acer";
-
-    BaseOperations baseOperations = new BaseOperations(driver);
-    WaitUtils waitUtils = new WaitUtils(driver);
-    HomePage homePage = new HomePage(driver);
-    SearchResultsPage searchResultsPage = new SearchResultsPage(driver);
-    NotebooksPage notebooksPage = new NotebooksPage(driver);
+    private static final String CHOSEN_NOTEBOOK_FIRM = "acer";
 
     @Test
     public void checkCorrectSortingProductAscending() {
+        BaseOperations baseOperations = new BaseOperations(driver);
+        WaitUtils waitUtils = new WaitUtils(driver);
+        ActionsByJavaScript js = new ActionsByJavaScript(driver);
+
+        HomePage homePage = new HomePage(driver);
         baseOperations.clickButton(homePage.catalog);
         baseOperations.clickButton(homePage.notebooksPageOpenButton);
-        waitUtils.waitForElementVisibilityAfterShortWait(notebooksPage.sortedList);
 
-        Select objSelect = new Select(notebooksPage.sortedList);
-        objSelect.selectByVisibleText(SORTING_BY_ASCENDING_KEYWORD);
+        SearchResultsPage searchResultsPage = new SearchResultsPage(driver);
+        waitUtils.waitForElementVisibilityAfterShortWait(searchResultsPage.sortedList);
+
+        baseOperations.selectByDropdownText(searchResultsPage.sortedList, SORTING_BY_ASCENDING_KEYWORD);
         waitUtils.waitForElementVisibilityAfterShortWait(searchResultsPage.sidebar);
         List<Integer> actualProductPriceList = new ArrayList<>();
 
         searchResultsPage.productPriceList.forEach(productPrice -> {
-            waitUtils.waitForElementVisibilityAfterShortWait(productPrice);
-            actualProductPriceList.add(baseOperations.getProductPriceWithNumericalSymbols(productPrice));
+            js.slowlyScrollToBottom();
+            waitUtils.waitForElementVisibilityAfterMiddleWait(productPrice);
+            actualProductPriceList.add(baseOperations.getProductPrice(productPrice));
         });
 
         List<Integer> expectedProductPriceList = new ArrayList<>(actualProductPriceList);
         Collections.sort(expectedProductPriceList);
 
-        for (int i = 0; i < actualProductPriceList.size(); i++) {
-            assertEquals(actualProductPriceList.get(i), expectedProductPriceList.get(i));
-        }
+        assertEquals(actualProductPriceList, expectedProductPriceList,
+                "Actual list by ascending price doesn't equals expected list. Actual product price list: "
+                        + actualProductPriceList + ". Expected product price list: " + expectedProductPriceList);
     }
 
     @Test
     public void checkCorrectSortingProductDescending() {
+        BaseOperations baseOperations = new BaseOperations(driver);
+        WaitUtils waitUtils = new WaitUtils(driver);
+        ActionsByJavaScript js = new ActionsByJavaScript(driver);
+
+        HomePage homePage = new HomePage(driver);
         baseOperations.clickButton(homePage.catalog);
         baseOperations.clickButton(homePage.notebooksPageOpenButton);
-        waitUtils.waitForElementVisibilityAfterShortWait(notebooksPage.sortedList);
 
-        Select objSelect = new Select(notebooksPage.sortedList);
-        objSelect.selectByVisibleText(SORTING_BY_DESCENDING_KEYWORD);
+        SearchResultsPage searchResultsPage = new SearchResultsPage(driver);
+        waitUtils.waitForElementVisibilityAfterShortWait(searchResultsPage.sortedList);
+
+        baseOperations.selectByDropdownText(searchResultsPage.sortedList, SORTING_BY_DESCENDING_KEYWORD);
         waitUtils.waitForElementVisibilityAfterShortWait(searchResultsPage.sidebar);
         List<Integer> actualProductPriceList = new ArrayList<>();
 
         searchResultsPage.productPriceList.forEach(productPrice -> {
-            waitUtils.waitForElementVisibilityAfterShortWait(productPrice);
-            actualProductPriceList.add(baseOperations.getProductPriceWithNumericalSymbols(productPrice));
+            js.slowlyScrollToBottom();
+            waitUtils.waitForElementVisibilityAfterMiddleWait(productPrice);
+            actualProductPriceList.add(baseOperations.getProductPrice(productPrice));
         });
 
         List<Integer> expectedProductPriceList = new ArrayList<>(actualProductPriceList);
         expectedProductPriceList.sort(Collections.reverseOrder());
 
-        for (int i = 0; i < actualProductPriceList.size(); i++) {
-            assertEquals(actualProductPriceList.get(i), expectedProductPriceList.get(i));
-        }
+        assertEquals(actualProductPriceList, expectedProductPriceList,
+                "Actual list by descending price doesn't equals expected list. Actual product price list: "
+                        + actualProductPriceList + "Expected product price list: " + expectedProductPriceList);
     }
 
     @Test
     public void checkCorrectSortingProductByFirmName() {
+        BaseOperations baseOperations = new BaseOperations(driver);
+        WaitUtils waitUtils = new WaitUtils(driver);
+        ActionsByJavaScript js = new ActionsByJavaScript(driver);
+
+        HomePage homePage = new HomePage(driver);
         baseOperations.clickButton(homePage.catalog);
         baseOperations.clickButton(homePage.notebooksPageOpenButton);
-        waitUtils.waitForElementVisibilityAfterShortWait(notebooksPage.acerFirmSelectButton);
 
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("window.scrollBy(0,400)");
+        NotebooksPage notebooksPage = new NotebooksPage(driver);
+        waitUtils.waitForElementVisibilityAfterMiddleWait(notebooksPage.acerFirmSelectButton);
 
-        waitUtils.waitForElementVisibilityAfterShortWait(notebooksPage.sortedList);
         baseOperations.clickButton(notebooksPage.acerFirmSelectButton);
-        waitUtils.waitForElementVisibilityAfterShortWait(searchResultsPage.sidebar);
+
+        SearchResultsPage searchResultsPage = new SearchResultsPage(driver);
+        waitUtils.waitForElementVisibilityAfterMiddleWait(searchResultsPage.sidebar);
 
         for (WebElement element : searchResultsPage.titleProductList) {
-            assertTrue(element.getText().contains(CHOSEN_NOTEBOOK_FIRM));
+            waitUtils.waitForElementVisibilityAfterMiddleWait(element);
+            js.slowlyScrollToBottom();
+            assertTrue(element.getText().toLowerCase().contains(CHOSEN_NOTEBOOK_FIRM),
+                    "Element doesn't contains chosen firm: " + CHOSEN_NOTEBOOK_FIRM);
         }
     }
 }
