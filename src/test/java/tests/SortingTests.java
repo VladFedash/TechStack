@@ -19,13 +19,12 @@ import static org.testng.Assert.assertTrue;
 public class SortingTests extends BaseTest {
     private static final String SORTING_BY_ASCENDING_KEYWORD = "От дешевых к дорогим";
     private static final String SORTING_BY_DESCENDING_KEYWORD = "От дорогих к дешевым";
-    private static final String CHOSEN_NOTEBOOK_FIRM = "acer";
+    private static final String CHOSEN_NOTEBOOK_FIRM = "lenovo";
 
     @Test
     public void checkCorrectSortingProductAscending() {
         BaseOperations baseOperations = new BaseOperations(driver);
         WaitUtils waitUtils = new WaitUtils(driver);
-        ActionsByJavaScript js = new ActionsByJavaScript(driver);
 
         HomePage homePage = new HomePage(driver);
         baseOperations.clickButton(homePage.catalog);
@@ -39,7 +38,6 @@ public class SortingTests extends BaseTest {
         List<Integer> actualProductPriceList = new ArrayList<>();
 
         searchResultsPage.productPriceList.forEach(productPrice -> {
-            js.slowlyScrollToBottom();
             waitUtils.waitForElementVisibilityAfterMiddleWait(productPrice);
             actualProductPriceList.add(baseOperations.getProductPrice(productPrice));
         });
@@ -56,7 +54,6 @@ public class SortingTests extends BaseTest {
     public void checkCorrectSortingProductDescending() {
         BaseOperations baseOperations = new BaseOperations(driver);
         WaitUtils waitUtils = new WaitUtils(driver);
-        ActionsByJavaScript js = new ActionsByJavaScript(driver);
 
         HomePage homePage = new HomePage(driver);
         baseOperations.clickButton(homePage.catalog);
@@ -70,7 +67,6 @@ public class SortingTests extends BaseTest {
         List<Integer> actualProductPriceList = new ArrayList<>();
 
         searchResultsPage.productPriceList.forEach(productPrice -> {
-            js.slowlyScrollToBottom();
             waitUtils.waitForElementVisibilityAfterMiddleWait(productPrice);
             actualProductPriceList.add(baseOperations.getProductPrice(productPrice));
         });
@@ -87,23 +83,23 @@ public class SortingTests extends BaseTest {
     public void checkCorrectSortingProductByFirmName() {
         BaseOperations baseOperations = new BaseOperations(driver);
         WaitUtils waitUtils = new WaitUtils(driver);
-        ActionsByJavaScript js = new ActionsByJavaScript(driver);
 
         HomePage homePage = new HomePage(driver);
         baseOperations.clickButton(homePage.catalog);
         baseOperations.clickButton(homePage.notebooksPageOpenButton);
 
         NotebooksPage notebooksPage = new NotebooksPage(driver);
-        waitUtils.waitForElementVisibilityAfterMiddleWait(notebooksPage.acerFirmSelectButton);
+        waitUtils.waitForElementVisibilityAfterMiddleWait(notebooksPage.lenovoFirmSelectButton);
 
-        baseOperations.clickButton(notebooksPage.acerFirmSelectButton);
+        new ActionsByJavaScript(driver).scrollByWebElement(notebooksPage.lenovoFirmSelectButton);
+
+        baseOperations.clickButton(notebooksPage.lenovoFirmSelectButton);
 
         SearchResultsPage searchResultsPage = new SearchResultsPage(driver);
         waitUtils.waitForElementVisibilityAfterMiddleWait(searchResultsPage.sidebar);
 
         for (WebElement element : searchResultsPage.titleProductList) {
             waitUtils.waitForElementVisibilityAfterMiddleWait(element);
-            js.slowlyScrollToBottom();
             assertTrue(element.getText().toLowerCase().contains(CHOSEN_NOTEBOOK_FIRM),
                     "Element doesn't contains chosen firm: " + CHOSEN_NOTEBOOK_FIRM);
         }

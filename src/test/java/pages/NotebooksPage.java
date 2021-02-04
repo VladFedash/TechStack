@@ -6,8 +6,8 @@ import org.openqa.selenium.support.FindBy;
 
 public class NotebooksPage extends BasePage {
 
-    @FindBy(xpath = ".//label[@for = 'Acer']")
-    public WebElement acerFirmSelectButton;
+    @FindBy(xpath = ".//label[@for = 'Lenovo']")
+    public WebElement lenovoFirmSelectButton;
 
     public NotebooksPage(WebDriver driver) {
         super(driver);

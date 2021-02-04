@@ -2,6 +2,7 @@ package helpers;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 public class ActionsByJavaScript extends WaitUtils {
     public ActionsByJavaScript(WebDriver driver) {
@@ -10,7 +11,7 @@ public class ActionsByJavaScript extends WaitUtils {
 
     JavascriptExecutor js = (JavascriptExecutor) driver;
 
-    public void slowlyScrollToBottom(){
-        js.executeScript("window.scrollTo(0, 20)");
+    public void scrollByWebElement(WebElement element) {
+        js.executeScript("arguments[0].scrollTop = arguments[1]", element);
     }
 }

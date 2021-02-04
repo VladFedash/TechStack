@@ -1,6 +1,6 @@
 package tests;
 
-import enums.Browsers;
+import browserFactory.BrowserFactory;
 import enums.Languages;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
@@ -14,7 +14,7 @@ public class BaseTest {
 
     @BeforeMethod
     public void testSetUp() {
-        driver = Browsers.CHROME.create();
+        driver = new BrowserFactory().getBrowser();
         driver.manage().window().maximize();
         driver.get(ROZETKA_URL);
         new BasePage(driver).setAppLanguage(Languages.RU);
