@@ -1,18 +1,17 @@
-package tests;
+package stepdefinitions;
 
-import browserFactory.BrowserFactory;
+import browser_factory.BrowserFactory;
 import enums.Languages;
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import pages.BasePage;
 
-public class BaseTest {
+public class Hook {
+    WebDriver driver;
+    public String ROZETKA_URL = "https://rozetka.com.ua/";
 
-    protected WebDriver driver;
-    private static final String ROZETKA_URL = "https://rozetka.com.ua/";
-
-    @BeforeMethod
+    @Before(order = 0)
     public void testSetUp() {
         driver = new BrowserFactory().getBrowser();
         driver.manage().window().maximize();
@@ -20,7 +19,7 @@ public class BaseTest {
         new BasePage(driver).setAppLanguage(Languages.RU);
     }
 
-    @AfterMethod
+    @After
     public void tearDown() {
         driver.quit();
     }
