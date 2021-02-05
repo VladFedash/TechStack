@@ -1,28 +1,17 @@
 package browserFactory;
 
+import helpers.ReadProperty;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Properties;
-
-
 public class BrowserFactory {
-    String browsers;
     WebDriver driver;
-    Properties prop = new Properties();
+    String browser;
 
     public WebDriver getBrowser() {
-        try {
-            prop.load(new FileInputStream("src/main/resources/config.properties"));
-            browsers = prop.getProperty("BROWSER");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        switch (browsers.toUpperCase()) {
+        browser = new ReadProperty().readProperty("BROWSER");
+        switch (browser.toUpperCase()) {
             case "CHROME" -> {
                 System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
                 driver = new ChromeDriver();
@@ -31,7 +20,7 @@ public class BrowserFactory {
                 System.setProperty("webdriver.gecko.driver", "src/main/resources/geckodriver.exe");
                 driver = new FirefoxDriver();
             }
-            default -> throw new IllegalStateException("Unexpected value: " + browsers.toUpperCase());
+            default -> throw new RuntimeException("Unexpected value: " + browser.toUpperCase());
         }
         return driver;
     }

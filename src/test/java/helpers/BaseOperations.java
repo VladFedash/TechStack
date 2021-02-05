@@ -21,10 +21,12 @@ public class BaseOperations extends WaitUtils {
     }
 
     public int getProductPrice(WebElement element){
+        waitForElementVisibilityAfterMiddleWait(element);
         return Integer.parseInt(element.getText().replaceAll("[^0-9]", ""));
     }
 
     public void selectByDropdownText(WebElement element, String sortingBy){
+        waitForElementVisibilityAfterMiddleWait(element);
         Select objSelect = new Select(element);
         objSelect.selectByVisibleText(sortingBy);
     }

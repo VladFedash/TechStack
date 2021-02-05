@@ -24,7 +24,7 @@ public class HomePageTests extends BaseTest {
         int randomCity = rand.nextInt(homePage.popularCityList.size());
 
         String expectedResult = homePage.popularCityList.get(randomCity).getText();
-        homePage.popularCityList.get(randomCity).click();
+        baseOperations.clickButton(homePage.popularCityList.get(randomCity));
         assertFalse(homePage.acceptCityChoiceButton.isSelected());
 
         baseOperations.clickButton(homePage.acceptCityChoiceButton);
