@@ -1,4 +1,4 @@
-package browserFactory;
+package browser_factory;
 
 import helpers.ReadProperty;
 import org.openqa.selenium.WebDriver;
