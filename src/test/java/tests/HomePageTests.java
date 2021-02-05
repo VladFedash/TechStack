@@ -10,28 +10,35 @@ import java.util.Random;
 import static org.testng.Assert.*;
 
 public class HomePageTests extends BaseTest {
-    BaseOperations baseOperations = new BaseOperations(driver);
-    WaitUtils waitUtils = new WaitUtils(driver);
-    HomePage homePage = new HomePage(driver);
 
     @Test
     public void checkAbilityChangeCityLocation() {
+        WaitUtils waitUtils = new WaitUtils(driver);
+        BaseOperations baseOperations = new BaseOperations(driver);
+
+        HomePage homePage = new HomePage(driver);
         baseOperations.clickButton(homePage.changeCitiesButton);
         waitUtils.waitForElementVisibilityAfterShortWait(homePage.modalHeader);
 
         Random rand = new Random();
         int randomCity = rand.nextInt(homePage.popularCityList.size());
 
-        String actualResult = homePage.popularCityList.get(randomCity).getText();
-        homePage.popularCityList.get(randomCity).click();
+        String expectedResult = homePage.popularCityList.get(randomCity).getText();
+        baseOperations.clickButton(homePage.popularCityList.get(randomCity));
         assertFalse(homePage.acceptCityChoiceButton.isSelected());
+
         baseOperations.clickButton(homePage.acceptCityChoiceButton);
         waitUtils.waitForElementVisibilityAfterShortWait(homePage.changeCitiesButton);
-        assertEquals(actualResult, homePage.changeCitiesButton.getText());
+        String actualResult = homePage.changeCitiesButton.getText();
+        assertEquals(actualResult, expectedResult,
+                "Actual chosen city doesn't equals expected city. Actual city: " + actualResult
+                        + ". Expected city: " + expectedResult);
     }
 
+    // Test using for check different methods (Web_Elements Lecture)
     @Test
     public void checkDifferentMethodsForWorkCapacity() {
+        HomePage homePage = new HomePage(driver);
         int siteLogoHeight = homePage.siteLogo.getLocation().y;
         int catalogHeight = homePage.catalog.getLocation().y;
 

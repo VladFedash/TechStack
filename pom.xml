@@ -23,7 +23,6 @@
             <version>6.14.3</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
     <properties>
         <maven.compiler.source>14</maven.compiler.source>

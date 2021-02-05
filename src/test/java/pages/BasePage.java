@@ -13,8 +13,8 @@ import org.openqa.selenium.support.PageFactory;
 public class BasePage {
     WebDriver driver;
     public static final String LOCATOR_FOR_BANNER = "//a[contains(@class ,'exponea-animate')]";
-    private final BaseOperations baseOperations;
-    private final WaitUtils waitUtils;
+    BaseOperations baseOperations;
+    WaitUtils waitUtils;
 
     @FindBy(xpath = "//span[@class = 'exponea-close-cross']")
     public WebElement closeAdButton;
