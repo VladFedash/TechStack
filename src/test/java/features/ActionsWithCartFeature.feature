@@ -1,4 +1,4 @@
-Feature: HAction with cart
+Feature: Action with cart
   As a user
   I want to perform an action
   So that I can achieve a business goal
@@ -35,4 +35,3 @@ Feature: HAction with cart
     Examples:
       | SEARCH_WORD | FIRST_PRODUCT_TITLE                                                   | SECOND_PRODUCT_TITLE                          | THIRD_PRODUCT_TITLE                                  |
       | xiaomi      | Видеорегистратор Xiaomi Yi Smart Dash WiFi Gray International Edition | IP-камера Xiaomi YI 1080p Home White YYS.2016 | IP-камера Xiaomi YI Dome X 360° 1080P White YYS.3017 |
-

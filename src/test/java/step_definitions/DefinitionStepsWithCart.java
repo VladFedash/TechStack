@@ -1,4 +1,4 @@
-package stepdefinitions;
+package step_definitions;
 
 import helpers.Action;
 import helpers.BaseOperations;

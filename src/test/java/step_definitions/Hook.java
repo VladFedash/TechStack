@@ -1,4 +1,4 @@
-package stepdefinitions;
+package step_definitions;
 
 import browser_factory.BrowserFactory;
 import enums.Languages;

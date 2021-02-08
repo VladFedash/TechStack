@@ -1,4 +1,4 @@
-package stepdefinitions;
+package step_definitions;
 
 import helpers.BaseOperations;
 import helpers.WaitUtils;
@@ -17,7 +17,6 @@ public class DefinitionStepsSearchResult {
     public DefinitionStepsSearchResult(Hook hook) {
         this.hook = hook;
     }
-
     private static final String SEARCH_NON_EXISTENT_KEYWORD = "non existent requestsfddgd";
     private static final String PRODUCT_AMOUNT_LOCATOR = ".//p[@class = 'catalog-selection__label']";
     private static int expectedResult;

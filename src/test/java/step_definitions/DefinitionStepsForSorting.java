@@ -1,4 +1,4 @@
-package stepdefinitions;
+package step_definitions;
 
 import helpers.ActionsByJavaScript;
 import helpers.BaseOperations;
@@ -58,7 +58,7 @@ public class DefinitionStepsForSorting {
     }
 
     @When("User waits when products are sorting by {string}")
-    public void sortingByAscending(final String sortingType) {
+    public void sortingBySortingType(final String sortingType) {
         searchResultsPage.productPriceList.forEach(productPrice -> {
             waitUtils.waitForElementVisibilityAfterMiddleWait(productPrice);
             actualProductPriceList = new ArrayList<>();
@@ -73,14 +73,13 @@ public class DefinitionStepsForSorting {
 
     @Then("User checks that products sorted by selected sorting")
     public void checkSortingBeAscending() {
-
         assertEquals(actualProductPriceList, expectedProductPriceList,
                 "Actual list by ascending price doesn't equals expected list. Actual product price list: "
                         + actualProductPriceList + ". Expected product price list: " + expectedProductPriceList);
     }
 
     @When("User selects product firm")
-            public void selectProductFirm() {
+    public void selectProductFirm() {
         notebooksPage = new NotebooksPage(hook.driver);
         waitUtils.waitForElementVisibilityAfterMiddleWait(notebooksPage.lenovoFirmSelectButton);
 
@@ -89,7 +88,7 @@ public class DefinitionStepsForSorting {
     }
 
     @Then("User checks products contains in title selected firm")
-            public void checkProductFirm(){
+    public void checkProductFirm() {
         js = new ActionsByJavaScript(hook.driver);
         js.scrollByWebElement(notebooksPage.lenovoFirmSelectButton);
         for (WebElement element : searchResultsPage.titleProductList) {
