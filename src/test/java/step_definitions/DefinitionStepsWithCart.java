@@ -3,8 +3,6 @@ package step_definitions;
 import helpers.Action;
 import helpers.BaseOperations;
 import helpers.WaitUtils;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import pages.BasePage;
 import pages.HomePage;
@@ -13,10 +11,10 @@ import pages.SearchResultsPage;
 import static org.testng.Assert.assertEquals;
 
 public class DefinitionStepsWithCart {
-    private final Hook hook;
+    private final BaseStepDefinition baseStepDefinition;
 
-    public DefinitionStepsWithCart(Hook hook) {
-        this.hook = hook;
+    public DefinitionStepsWithCart(BaseStepDefinition baseStepDefinition) {
+        this.baseStepDefinition = baseStepDefinition;
     }
 
     Action action;
@@ -26,25 +24,26 @@ public class DefinitionStepsWithCart {
     BaseOperations baseOperations;
     SearchResultsPage searchResultsPage;
 
-    @Given("User input {string} into search field with action functionality")
+    @When("User input {string} into search field with action functionality")
     public void inputKeywordByActionToSearchField(final String searchKeyword) {
-        waitUtils = new WaitUtils(hook.driver);
-        homePage = new HomePage(hook.driver);
-        action = new Action(hook.driver);
+        waitUtils = new WaitUtils(baseStepDefinition.driver);
+        homePage = new HomePage(baseStepDefinition.driver);
+        action = new Action(baseStepDefinition.driver);
         action.inputToSearchField(homePage.searchField, searchKeyword);
 
-        searchResultsPage = new SearchResultsPage(hook.driver);
+        searchResultsPage = new SearchResultsPage(baseStepDefinition.driver);
         waitUtils.waitForVisibilityOfAllElements(searchResultsPage.titleProductList);
     }
 
 
     @When("User adds into the cart product with {string} title")
     public void addProductIntoCart(final String title) {
+        waitUtils.waitForVisibilityOfAllElements(searchResultsPage.titleProductList);
         searchResultsPage.addProductInCart(title);
         waitUtils.waitForElementVisibilityAfterShortWait(homePage.productCountInCart);
     }
 
-    @Then("Users checks that cart count is {string}")
+    @When("Users checks that cart count is {string}")
     public void checkAddIntoCart(final String productAmountInCart) {
         int actualResult = Integer.parseInt(homePage.productCountInCart.getText().trim());
         assertEquals(actualResult, Integer.parseInt(productAmountInCart),
@@ -54,17 +53,20 @@ public class DefinitionStepsWithCart {
 
     @When("User opens cart")
     public void openCart() {
-        baseOperations = new BaseOperations(hook.driver);
+        waitUtils.waitForVisibilityOfAllElements(searchResultsPage.titleProductList);
+        baseOperations = new BaseOperations(baseStepDefinition.driver);
         baseOperations.clickButton(homePage.openCartButton);
     }
 
     @When("User deletes product from cart")
     public void deleteProduct() {
+        waitUtils.waitForElementVisibilityAfterShortWait(homePage.contextMenuButton);
         baseOperations.clickButton(homePage.contextMenuButton);
+        waitUtils.waitForElementVisibilityAfterShortWait(homePage.deleteProductFromCartButton);
         baseOperations.clickButton(homePage.deleteProductFromCartButton);
     }
 
-    @Then("User checks that cart is {string}")
+    @When("User checks that cart is {string}")
     public void checkCartEmpty(final String emptyMessage) {
         waitUtils.waitForElementVisibilityAfterShortWait(homePage.emptyCartMessage);
         String actualResult = homePage.emptyCartMessage.getText();
@@ -75,11 +77,11 @@ public class DefinitionStepsWithCart {
 
     @When("User closes ad popup if it's visible")
     public void closePopup() {
-        basePage = new BasePage(hook.driver);
+        basePage = new BasePage(baseStepDefinition.driver);
         basePage.closeAdPopup();
     }
 
-    @Then("User checks that products sum price equals subtotal price")
+    @When("User checks that products sum price equals subtotal price")
     public void checkSubtotalPrice() {
         waitUtils.waitForElementVisibilityAfterLongWait(homePage.totalProductPriceInCart);
 
