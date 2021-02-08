@@ -3,8 +3,6 @@ package step_definitions;
 import helpers.ActionsByJavaScript;
 import helpers.BaseOperations;
 import helpers.WaitUtils;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebElement;
 import pages.HomePage;
@@ -20,10 +18,10 @@ import static org.testng.Assert.assertTrue;
 
 public class DefinitionStepsForSorting {
 
-    private final Hook hook;
+    private final BaseStepDefinition baseStepDefinition;
 
-    public DefinitionStepsForSorting(Hook hook) {
-        this.hook = hook;
+    public DefinitionStepsForSorting(BaseStepDefinition baseStepDefinition) {
+        this.baseStepDefinition = baseStepDefinition;
     }
 
     private static final String SORTING_BY_ASCENDING_KEYWORD = "От дешевых к дорогим";
@@ -39,26 +37,27 @@ public class DefinitionStepsForSorting {
     BaseOperations baseOperations;
     SearchResultsPage searchResultsPage;
 
-    @Given("User opens notebook page")
+    @When("User opens notebook page")
     public void openPageByProductCatalog() {
-        baseOperations = new BaseOperations(hook.driver);
-        waitUtils = new WaitUtils(hook.driver);
-        homePage = new HomePage(hook.driver);
+        baseOperations = new BaseOperations(baseStepDefinition.driver);
+        waitUtils = new WaitUtils(baseStepDefinition.driver);
+        homePage = new HomePage(baseStepDefinition.driver);
         baseOperations.clickButton(homePage.catalog);
         baseOperations.clickButton(homePage.notebooksPageOpenButton);
 
-        searchResultsPage = new SearchResultsPage(hook.driver);
+        searchResultsPage = new SearchResultsPage(baseStepDefinition.driver);
         waitUtils.waitForElementVisibilityAfterShortWait(searchResultsPage.sortedList);
     }
 
     @When("User selects in dropdown sorting type - {string}")
     public void selectSortingType(final String sortingType) {
+        waitUtils.waitForElementVisibilityAfterShortWait(searchResultsPage.sortedList);
         baseOperations.selectByDropdownText(searchResultsPage.sortedList, sortingType);
         waitUtils.waitForElementVisibilityAfterShortWait(searchResultsPage.sidebar);
     }
 
     @When("User waits when products are sorting by {string}")
-    public void sortingBySortingType(final String sortingType) {
+    public void sortingByPrice(final String sortingType) {
         searchResultsPage.productPriceList.forEach(productPrice -> {
             waitUtils.waitForElementVisibilityAfterMiddleWait(productPrice);
             actualProductPriceList = new ArrayList<>();
@@ -71,7 +70,7 @@ public class DefinitionStepsForSorting {
         }
     }
 
-    @Then("User checks that products sorted by selected sorting")
+    @When("User checks that products sorted by selected sorting")
     public void checkSortingBeAscending() {
         assertEquals(actualProductPriceList, expectedProductPriceList,
                 "Actual list by ascending price doesn't equals expected list. Actual product price list: "
@@ -80,16 +79,16 @@ public class DefinitionStepsForSorting {
 
     @When("User selects product firm")
     public void selectProductFirm() {
-        notebooksPage = new NotebooksPage(hook.driver);
+        notebooksPage = new NotebooksPage(baseStepDefinition.driver);
         waitUtils.waitForElementVisibilityAfterMiddleWait(notebooksPage.lenovoFirmSelectButton);
 
         baseOperations.clickButton(notebooksPage.lenovoFirmSelectButton);
         waitUtils.waitForElementVisibilityAfterMiddleWait(searchResultsPage.sidebar);
     }
 
-    @Then("User checks products contains in title selected firm")
+    @When("User checks products contains in title selected firm")
     public void checkProductFirm() {
-        js = new ActionsByJavaScript(hook.driver);
+        js = new ActionsByJavaScript(baseStepDefinition.driver);
         js.scrollByWebElement(notebooksPage.lenovoFirmSelectButton);
         for (WebElement element : searchResultsPage.titleProductList) {
             waitUtils.waitForElementVisibilityAfterMiddleWait(element);
