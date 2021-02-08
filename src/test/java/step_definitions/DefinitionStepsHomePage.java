@@ -1,4 +1,4 @@
-package stepdefinitions;
+package step_definitions;
 
 import helpers.BaseOperations;
 import helpers.WaitUtils;
@@ -46,8 +46,6 @@ public class DefinitionStepsHomePage {
 
     @When("User clicks accept city choice button")
     public void acceptCityChoice() {
-        assertFalse(homePage.acceptCityChoiceButton.isSelected());
-
         baseOperations.clickButton(homePage.acceptCityChoiceButton);
         waitUtils.waitForElementVisibilityAfterShortWait(homePage.changeCitiesButton);
     }
