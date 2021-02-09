@@ -14,7 +14,7 @@ public class HomePage extends BasePage {
     @FindBy(xpath = ".//input[@name = 'search']")
     public WebElement searchField;
 
-    @FindBy(xpath = ".//button[@class = 'menu-toggler']")
+    @FindBy(xpath = ".//button[@id= 'fat-menu']")
     public WebElement catalog;
 
     @FindBy(xpath = ".//a[@class = 'header__logo']")
@@ -23,7 +23,7 @@ public class HomePage extends BasePage {
     @FindBy(xpath = ".//a[@class ='menu__hidden-title'][contains(@href, '/notebooks/')][not(contains(@href, 'preset=game'))]")
     public WebElement notebooksPageOpenButton;
 
-    @FindBy(xpath = ".//div[@class = 'js-rz-cart']//span[contains(@class, 'button-counter')]")
+    @FindBy(xpath = ".//span[contains(@class, 'counter')]")
     public WebElement productCountInCart;
 
     @FindBy(xpath = ".//button[@id = 'cartProductActions0']")
@@ -41,7 +41,7 @@ public class HomePage extends BasePage {
     @FindBy(xpath = ".//div[contains(@class, 'sum-price')]")
     public WebElement totalProductPriceInCart;
 
-    @FindBy(xpath = ".//button[contains(@class, 'cities__label')]")
+    @FindBy(xpath = ".//button[contains(@class, 'city')]")
     public WebElement changeCitiesButton;
 
     @FindBy(xpath = ".//div[@class = 'modal__header']")
@@ -50,7 +50,7 @@ public class HomePage extends BasePage {
     @FindBy(xpath = ".//a[@class = 'header-location__popular-link']")
     public List<WebElement> popularCityList;
 
-    @FindBy(xpath = ".//button[contains(@class, 'medium button')]")
+    @FindBy(xpath = ".//div[@class = 'header-location__footer']//button[contains(@class, 'color_green')]")
     public WebElement acceptCityChoiceButton;
 
     public HomePage(WebDriver driver) {

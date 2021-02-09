@@ -2,6 +2,7 @@ package step_definitions;
 
 import helpers.BaseOperations;
 import helpers.WaitUtils;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
 import pages.HomePage;
@@ -11,14 +12,12 @@ import static org.testng.Assert.assertEquals;
 
 public class DefinitionStepsSearchResult {
     private final BaseStepDefinition baseStepDefinition;
+    private static final String PRODUCT_AMOUNT_LOCATOR = ".//p[@class = 'catalog-selection__label']";
+    private static int expectedResult;
 
     public DefinitionStepsSearchResult(BaseStepDefinition baseStepDefinition) {
         this.baseStepDefinition = baseStepDefinition;
     }
-
-    private static final String SEARCH_NON_EXISTENT_KEYWORD = "non existent requestsfddgd";
-    private static final String PRODUCT_AMOUNT_LOCATOR = ".//p[@class = 'catalog-selection__label']";
-    private static int expectedResult;
 
     HomePage homePage;
     WaitUtils waitUtils;
@@ -47,7 +46,7 @@ public class DefinitionStepsSearchResult {
         waitUtils.waitForVisibilityOfAllElements(searchResultsPage.titleProductList);
     }
 
-    @When("User checks that amount of elements increased by the specified amount")
+    @Then("User checks that amount of elements increased by the specified amount")
     public void checkElementIncreasing() {
         assertEquals(searchResultsPage.titleProductList.size(), expectedResult,
                 "Actual amount of elements doesn't equals expected amount. Actual amount: "
@@ -61,7 +60,7 @@ public class DefinitionStepsSearchResult {
         homePage.inputToSearchFieldAndPressEnter(searchKeyword);
     }
 
-    @When("User checks amount of products equals specified quantity")
+    @Then("User checks amount of products equals specified quantity")
     public void checkAmountOfProducts() {
         waitUtils.waitForElementPresenceAfterShortWait(By.xpath(PRODUCT_AMOUNT_LOCATOR));
         int expectedResult = baseOperations.getProductPrice(searchResultsPage.productAmountOnPage);
@@ -70,7 +69,7 @@ public class DefinitionStepsSearchResult {
                         + searchResultsPage.titleProductList.size() + ". Expected result: " + expectedResult);
     }
 
-    @When("User checks actual massage equals {string}")
+    @Then("User checks actual massage equals {string}")
     public void checksMessageEquals(final String massage) {
         waitUtils.waitForElementVisibilityAfterMiddleWait(searchResultsPage.massageAboutNoMatches);
         String actualResult = searchResultsPage.massageAboutNoMatches.getText();

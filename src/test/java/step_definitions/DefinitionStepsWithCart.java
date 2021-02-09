@@ -3,6 +3,7 @@ package step_definitions;
 import helpers.Action;
 import helpers.BaseOperations;
 import helpers.WaitUtils;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import pages.BasePage;
 import pages.HomePage;
@@ -43,7 +44,7 @@ public class DefinitionStepsWithCart {
         waitUtils.waitForElementVisibilityAfterShortWait(homePage.productCountInCart);
     }
 
-    @When("Users checks that cart count is {string}")
+    @Then("Users checks that cart count is {string}")
     public void checkAddIntoCart(final String productAmountInCart) {
         int actualResult = Integer.parseInt(homePage.productCountInCart.getText().trim());
         assertEquals(actualResult, Integer.parseInt(productAmountInCart),
@@ -66,7 +67,7 @@ public class DefinitionStepsWithCart {
         baseOperations.clickButton(homePage.deleteProductFromCartButton);
     }
 
-    @When("User checks that cart is {string}")
+    @Then("User checks that cart is {string}")
     public void checkCartEmpty(final String emptyMessage) {
         waitUtils.waitForElementVisibilityAfterShortWait(homePage.emptyCartMessage);
         String actualResult = homePage.emptyCartMessage.getText();
@@ -81,7 +82,7 @@ public class DefinitionStepsWithCart {
         basePage.closeAdPopup();
     }
 
-    @When("User checks that products sum price equals subtotal price")
+    @Then("User checks that products sum price equals subtotal price")
     public void checkSubtotalPrice() {
         waitUtils.waitForElementVisibilityAfterLongWait(homePage.totalProductPriceInCart);
 

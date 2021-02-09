@@ -3,6 +3,7 @@ package step_definitions;
 import helpers.ActionsByJavaScript;
 import helpers.BaseOperations;
 import helpers.WaitUtils;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebElement;
 import pages.HomePage;
@@ -19,16 +20,12 @@ import static org.testng.Assert.assertTrue;
 public class DefinitionStepsForSorting {
 
     private final BaseStepDefinition baseStepDefinition;
+    private static final String CHOSEN_NOTEBOOK_FIRM = "lenovo";
+    private static List<Integer> expectedProductPriceList;
 
     public DefinitionStepsForSorting(BaseStepDefinition baseStepDefinition) {
         this.baseStepDefinition = baseStepDefinition;
     }
-
-    private static final String SORTING_BY_ASCENDING_KEYWORD = "От дешевых к дорогим";
-    private static final String SORTING_BY_DESCENDING_KEYWORD = "От дорогих к дешевым";
-    private static final String CHOSEN_NOTEBOOK_FIRM = "lenovo";
-    private static List<Integer> actualProductPriceList;
-    private static List<Integer> expectedProductPriceList;
 
     HomePage homePage;
     WaitUtils waitUtils;
@@ -56,25 +53,24 @@ public class DefinitionStepsForSorting {
         waitUtils.waitForElementVisibilityAfterShortWait(searchResultsPage.sidebar);
     }
 
-    @When("User waits when products are sorting by {string}")
-    public void sortingByPrice(final String sortingType) {
-        searchResultsPage.productPriceList.forEach(productPrice -> {
-            waitUtils.waitForElementVisibilityAfterMiddleWait(productPrice);
-            actualProductPriceList = new ArrayList<>();
-            actualProductPriceList.add(baseOperations.getProductPrice(productPrice));
-            expectedProductPriceList = new ArrayList<>(actualProductPriceList);
-        });
-        switch (sortingType) {
-            case SORTING_BY_ASCENDING_KEYWORD -> Collections.sort(expectedProductPriceList);
-            case SORTING_BY_DESCENDING_KEYWORD -> expectedProductPriceList.sort(Collections.reverseOrder());
-        }
+    @Then("User checks that products sorted by ascending")
+    public void checkSortingByAscending() {
+        expectedProductPriceList = new ArrayList<>(searchResultsPage.productPriceList());
+        Collections.sort(expectedProductPriceList);
+
+        assertEquals(searchResultsPage.productPriceList(), expectedProductPriceList,
+                "Actual list by ascending price doesn't equals expected list. Actual product price list: "
+                        + searchResultsPage.productPriceList() + ". Expected product price list: " + expectedProductPriceList);
     }
 
-    @When("User checks that products sorted by selected sorting")
-    public void checkSortingBeAscending() {
-        assertEquals(actualProductPriceList, expectedProductPriceList,
-                "Actual list by ascending price doesn't equals expected list. Actual product price list: "
-                        + actualProductPriceList + ". Expected product price list: " + expectedProductPriceList);
+    @Then("User checks that products sorted by descending")
+    public void checkSortingByDescending() {
+        expectedProductPriceList = new ArrayList<>(searchResultsPage.productPriceList());
+        expectedProductPriceList.sort(Collections.reverseOrder());
+
+        assertEquals(searchResultsPage.productPriceList(), expectedProductPriceList,
+                "Actual list by descending price doesn't equals expected list. Actual product price list: "
+                        + searchResultsPage.productPriceList() + ". Expected product price list: " + expectedProductPriceList);
     }
 
     @When("User selects product firm")
@@ -86,7 +82,7 @@ public class DefinitionStepsForSorting {
         waitUtils.waitForElementVisibilityAfterMiddleWait(searchResultsPage.sidebar);
     }
 
-    @When("User checks products contains in title selected firm")
+    @Then("User checks products contains in title selected firm")
     public void checkProductFirm() {
         js = new ActionsByJavaScript(baseStepDefinition.driver);
         js.scrollByWebElement(notebooksPage.lenovoFirmSelectButton);

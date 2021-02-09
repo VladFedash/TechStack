@@ -3,7 +3,7 @@ Feature: Home page features
   I want to perform an action
   So that I can achieve a business goal
 
-    Background: Pre-condition
+  Background: Pre-condition
     Given User opens home page
     Then Home page are displayed for user
 
@@ -11,14 +11,14 @@ Feature: Home page features
     When User clicks on the city button
     When User selects random city
     When User clicks accept city choice button
-    When User checks changed city location
+    Then User checks changed city location
 
   Scenario Outline: Check different methods (Web_Elements Lecture)
-    When User checks that tag name equals '<tagName>'
-    When User checks that attribute name 'arial-label' equals '<attributeName>'
-    When User checks that css value 'font-size' equals '<pixels>'
-    When User checks correct site logo and product catalog elements location
+    Then User checks that tag name equals '<tagName>'
+    Then User checks that attribute name 'arial-label' equals '<attributeName>'
+    Then User checks that css value 'font-size' equals '<pixels>'
+    Then User checks correct site logo and product catalog elements location
 
     Examples:
-      | tagName | attributeName   | pixels |
-      | button  | Каталог товаров | 16px   |
+      | tagName | attributeName | pixels |
+      | button  | Каталог       | 16px   |
