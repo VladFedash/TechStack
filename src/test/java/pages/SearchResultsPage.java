@@ -4,13 +4,18 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import values.ProductDTO;
 import values.PricesDTO;
+import values.ProductDTO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SearchResultsPage extends BasePage {
     private static final String PRODUCT_BLOCK = ".//span[@class='goods-tile__title'][contains(text(), '%s')]/ancestor::div[@class = 'goods-tile']";
+    private static final String SORTING_BY_ASCENDING_KEYWORD = "От дешевых к дорогим";
+    private static final String SORTING_BY_DESCENDING_KEYWORD = "От дорогих к дешевым";
+    private static List<Integer> actualProductPriceList;
+
     PricesDTO pricesDTO = new PricesDTO();
 
     @FindBy(xpath = ".//span[@class = 'goods-tile__title']")
@@ -45,6 +50,15 @@ public class SearchResultsPage extends BasePage {
         productBlock = driver.findElement(By.xpath(String.format(PRODUCT_BLOCK, str)));
         baseOperations.clickButton(productBlock.findElement(By.xpath(".//button[contains(@class, 'buy-button')]")));
         pricesDTO.addItem(new ProductDTO(baseOperations.getProductPrice(productBlock.findElement(By.xpath(".//span[@class='goods-tile__price-value']"))), str));
+    }
+
+    public List<Integer> productPriceList() {
+        productPriceList.forEach(productPrice -> {
+            waitUtils.waitForElementVisibilityAfterMiddleWait(productPrice);
+            actualProductPriceList = new ArrayList<>();
+            actualProductPriceList.add(baseOperations.getProductPrice(productPrice));
+        });
+        return actualProductPriceList;
     }
 
     public int getProductDTOSubtotal() {

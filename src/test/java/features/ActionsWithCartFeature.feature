@@ -9,8 +9,8 @@ Feature: Action with cart
 
   Scenario Outline: Check add product to cart
     When User input '<SEARCH_WORD>' into search field with action functionality
-    When  User adds into the cart product with '<PRODUCT_TITLE>' title
-    When Users checks that cart count is '<EXPECTED_COUNT>'
+    When User adds into the cart product with '<PRODUCT_TITLE>' title
+    Then Users checks that cart count is '<EXPECTED_COUNT>'
 
     Examples:
       | SEARCH_WORD | PRODUCT_TITLE                                                         | EXPECTED_COUNT |
@@ -18,10 +18,10 @@ Feature: Action with cart
 
   Scenario Outline: Check remove product from cart
     When User input '<SEARCH_WORD>' into search field with action functionality
-    When  User adds into the cart product with '<PRODUCT_TITLE>' title
+    When User adds into the cart product with '<PRODUCT_TITLE>' title
     When User opens cart
     When User deletes product from cart
-    When User checks that cart is '<EMPTY>'
+    Then User checks that cart is '<EMPTY>'
 
     Examples:
       | SEARCH_WORD | PRODUCT_TITLE                                                         | EMPTY         |
@@ -30,11 +30,11 @@ Feature: Action with cart
   Scenario Outline: Check subtotal price of elements in cart
     When User input '<SEARCH_WORD>' into search field with action functionality
     When User closes ad popup if it's visible
-    When  User adds into the cart product with '<FIRST_PRODUCT_TITLE>' title
-    When  User adds into the cart product with '<SECOND_PRODUCT_TITLE>' title
-    When  User adds into the cart product with '<THIRD_PRODUCT_TITLE>' title
+    When User adds into the cart product with '<FIRST_PRODUCT_TITLE>' title
+    When User adds into the cart product with '<SECOND_PRODUCT_TITLE>' title
+    When User adds into the cart product with '<THIRD_PRODUCT_TITLE>' title
     When User opens cart
-    When User checks that products sum price equals subtotal price
+    Then User checks that products sum price equals subtotal price
 
     Examples:
       | SEARCH_WORD | FIRST_PRODUCT_TITLE                                                   | SECOND_PRODUCT_TITLE                          | THIRD_PRODUCT_TITLE                                  |

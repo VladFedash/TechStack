@@ -10,10 +10,8 @@ import pages.BasePage;
 import pages.HomePage;
 
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.*;
 
 public class DefinitionStepsHomePage {
     private final BaseStepDefinition baseStepDefinition;
@@ -37,9 +35,8 @@ public class DefinitionStepsHomePage {
 
     @Then("Home page are displayed for user")
     public void waitForHomePageDisplayed() {
-        baseStepDefinition.driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
+        new WaitUtils(baseStepDefinition.driver).waitForPageLoading();
     }
-
 
     @When("User clicks on the city button")
     public void clickChangeCity() {
@@ -47,6 +44,7 @@ public class DefinitionStepsHomePage {
         baseOperations = new BaseOperations(baseStepDefinition.driver);
 
         homePage = new HomePage(baseStepDefinition.driver);
+        baseOperations.clickButton(homePage.menuButton);
         baseOperations.clickButton(homePage.changeCitiesButton);
         waitUtils.waitForElementVisibilityAfterShortWait(homePage.modalHeader);
     }
@@ -63,12 +61,13 @@ public class DefinitionStepsHomePage {
 
     @When("User clicks accept city choice button")
     public void acceptCityChoice() {
+        waitUtils.waitForElementVisibilityAfterShortWait(homePage.acceptCityChoiceButton);
         baseOperations.clickButton(homePage.acceptCityChoiceButton);
-        waitUtils.waitForElementVisibilityAfterShortWait(homePage.changeCitiesButton);
     }
 
-    @When("User checks changed city location")
+    @Then("User checks changed city location")
     public void checkCityLocationChanged() {
+        baseOperations.clickButton(homePage.menuButton);
         waitUtils.waitForElementVisibilityAfterShortWait(homePage.changeCitiesButton);
         String actualResult = homePage.changeCitiesButton.getText();
         assertEquals(actualResult, expectedResult,
@@ -76,27 +75,27 @@ public class DefinitionStepsHomePage {
                         + ". Expected city: " + expectedResult);
     }
 
-    @When("User checks that tag name equals {string}")
+    @Then("User checks that tag name equals {string}")
     public void getTagName(final String sortingType) {
         homePage = new HomePage(baseStepDefinition.driver);
         assertEquals(homePage.catalog.getTagName(), sortingType);
     }
 
-    @When("User checks that attribute name 'arial-label' equals {string}")
+    @Then("User checks that attribute name 'arial-label' equals {string}")
     public void getAttributeName(final String attributeName) {
         assertEquals(homePage.catalog.getAttribute("aria-label"), attributeName);
     }
 
-    @When("User checks that css value 'font-size' equals {string}")
+    @Then("User checks that css value 'font-size' equals {string}")
     public void getCssValue(final String pixels) {
         assertEquals(homePage.catalog.getCssValue("font-size"), pixels);
 
     }
 
-    @When("User checks correct site logo and product catalog elements location")
+    @Then("User checks correct site logo and product catalog elements location")
     public void checkCorrectElementLocation() {
         assertTrue(homePage.siteLogo.getLocation().x
                 + homePage.siteLogo.getSize().width < homePage.catalog.getLocation().x);
-        assertEquals(homePage.siteLogo.getLocation().y, homePage.catalog.getLocation().y);
+        assertNotEquals(homePage.siteLogo.getLocation().y, homePage.catalog.getLocation().y);
     }
 }

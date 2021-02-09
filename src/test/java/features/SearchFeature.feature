@@ -9,8 +9,8 @@ Feature: Searching
 
   Scenario Outline: Check show more feature
     When User inputs '<SEARCH_WORD_PHONE>' to search field and press enter
-    When  User scrolls down and click show more products button
-    When User checks that amount of elements increased by the specified amount
+    When User scrolls down and click show more products button
+    Then User checks that amount of elements increased by the specified amount
 
     Examples:
       | SEARCH_WORD_PHONE |
@@ -19,7 +19,7 @@ Feature: Searching
   Scenario Outline: Check elements amount on search page
     When User inputs '<SEARCH_WORD_PHONE>' to search field and press enter
     When User clears search field and input another '<SEARCH_WORD_IPHONE>'
-    When User checks amount of products equals specified quantity
+    Then User checks amount of products equals specified quantity
 
     Examples:
       | SEARCH_WORD_PHONE | SEARCH_WORD_IPHONE |
@@ -27,7 +27,7 @@ Feature: Searching
 
   Scenario Outline: Check search for no matches
     When User inputs '<SEARCH_NON_EXISTENT_KEYWORD>' to search field and press enter
-    When User checks actual massage equals '<EXPECTED_NO_MATCHES_MESSAGE>'
+    Then User checks actual massage equals '<EXPECTED_NO_MATCHES_MESSAGE>'
 
     Examples:
       | SEARCH_NON_EXISTENT_KEYWORD | EXPECTED_NO_MATCHES_MESSAGE                      |

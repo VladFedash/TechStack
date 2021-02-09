@@ -6,6 +6,7 @@ import org.openqa.selenium.support.ui.*;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class WaitUtils {
     WebDriver driver;
@@ -22,6 +23,10 @@ public class WaitUtils {
 
     public void waitForElementVisibilityAfterShortWait(WebElement element) {
         waitForElementVisibility(WaitTimes.SHORT.getValue(), element);
+    }
+
+    public void waitForPageLoading(){
+        driver.manage().timeouts().pageLoadTimeout(WaitTimes.LONG.getValue(),TimeUnit.SECONDS);
     }
 
     public void waitForElementVisibilityAfterMiddleWait(WebElement element) {
