@@ -21,7 +21,9 @@ public class DefinitionStepsForSorting {
 
     private final BaseStepDefinition baseStepDefinition;
     private static final String CHOSEN_NOTEBOOK_FIRM = "lenovo";
+    private static List<Integer> actualProductPriceList;
     private static List<Integer> expectedProductPriceList;
+
 
     public DefinitionStepsForSorting(BaseStepDefinition baseStepDefinition) {
         this.baseStepDefinition = baseStepDefinition;
@@ -55,22 +57,24 @@ public class DefinitionStepsForSorting {
 
     @Then("User checks that products sorted by ascending")
     public void checkSortingByAscending() {
-        expectedProductPriceList = new ArrayList<>(searchResultsPage.productPriceList());
+        actualProductPriceList = new ArrayList<>(searchResultsPage.getProductPriceList());
+        expectedProductPriceList = new ArrayList<>(searchResultsPage.getProductPriceList());
         Collections.sort(expectedProductPriceList);
 
-        assertEquals(searchResultsPage.productPriceList(), expectedProductPriceList,
+        assertEquals(actualProductPriceList, expectedProductPriceList,
                 "Actual list by ascending price doesn't equals expected list. Actual product price list: "
-                        + searchResultsPage.productPriceList() + ". Expected product price list: " + expectedProductPriceList);
+                        + actualProductPriceList + ". Expected product price list: " + expectedProductPriceList);
     }
 
     @Then("User checks that products sorted by descending")
     public void checkSortingByDescending() {
-        expectedProductPriceList = new ArrayList<>(searchResultsPage.productPriceList());
+        actualProductPriceList = new ArrayList<>(searchResultsPage.getProductPriceList());
+        expectedProductPriceList = new ArrayList<>(searchResultsPage.getProductPriceList());
         expectedProductPriceList.sort(Collections.reverseOrder());
 
-        assertEquals(searchResultsPage.productPriceList(), expectedProductPriceList,
+        assertEquals(actualProductPriceList, expectedProductPriceList,
                 "Actual list by descending price doesn't equals expected list. Actual product price list: "
-                        + searchResultsPage.productPriceList() + ". Expected product price list: " + expectedProductPriceList);
+                        + actualProductPriceList + ". Expected product price list: " + expectedProductPriceList);
     }
 
     @When("User selects product firm")

@@ -5,7 +5,7 @@ Feature: Searching
 
   Background: Pre-condition
     Given User opens home page
-    Then Home page are displayed for user
+    Then Home page is displayed for user
 
   Scenario Outline: Check show more feature
     When User inputs '<SEARCH_WORD_PHONE>' to search field and press enter
