@@ -16,7 +16,7 @@ public class BaseOperations extends WaitUtils {
     }
 
     public void clickButton(By by) {
-        waitForElementVisibilityAfterShortWait(driver.findElement(by));
+        waitForElementVisibilityAfterMiddleWait(driver.findElement(by));
         driver.findElement(by).click();
     }
 

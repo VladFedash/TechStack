@@ -25,7 +25,10 @@ public class BasePage {
     })
     public WebElement banner;
 
-    public String languageLocator = ".//a[text() = '%s']";
+    @FindBy(xpath = ".//rz-mobile-user-menu/button[@class = 'header__button']")
+    public WebElement menuButton;
+
+    public String languageLocator = ".//a[text() = ' %s ']";
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
@@ -42,6 +45,7 @@ public class BasePage {
     }
 
     public void setAppLanguage(Languages language) {
+        baseOperations.clickButton(menuButton);
         switch (language) {
             case RU -> baseOperations.clickButton(By.xpath(String.format(languageLocator, Languages.RU)));
             case UA -> baseOperations.clickButton(By.xpath(String.format(languageLocator, Languages.UA)));
