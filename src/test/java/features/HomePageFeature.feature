@@ -5,7 +5,7 @@ Feature: Home page features
 
   Background: Pre-condition
     Given User opens home page
-    Then Home page are displayed for user
+    Then Home page is displayed for user
 
   Scenario: Check ability change city location
     When User clicks on the city button

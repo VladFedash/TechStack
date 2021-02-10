@@ -5,7 +5,7 @@ Feature: Sorting
 
   Background: Pre-condition
     Given User opens home page
-    Then Home page are displayed for user
+    Then Home page is displayed for user
 
   Scenario Outline: Check sort by ascending sorting
     When User opens notebook page

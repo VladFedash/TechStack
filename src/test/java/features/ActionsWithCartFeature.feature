@@ -5,7 +5,7 @@ Feature: Action with cart
 
   Background: Pre-condition
     Given User opens home page
-    Then Home page are displayed for user
+    Then Home page is displayed for user
 
   Scenario Outline: Check add product to cart
     When User input '<SEARCH_WORD>' into search field with action functionality

@@ -33,7 +33,7 @@ public class DefinitionStepsHomePage {
         new BasePage(baseStepDefinition.driver).setAppLanguage(Languages.RU);
     }
 
-    @Then("Home page are displayed for user")
+    @Then("Home page is displayed for user")
     public void waitForHomePageDisplayed() {
         new WaitUtils(baseStepDefinition.driver).waitForPageLoading();
     }
