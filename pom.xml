@@ -55,6 +55,14 @@
             <version>${cucumber-picocontainer.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/net.masterthought/cucumber-reporting -->
+        <dependency>
+            <groupId>net.masterthought</groupId>
+            <artifactId>cucumber-reporting</artifactId>
+            <version>5.5.2</version>
+        </dependency>
+
     </dependencies>
 
 </project>

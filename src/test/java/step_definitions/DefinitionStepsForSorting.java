@@ -24,7 +24,6 @@ public class DefinitionStepsForSorting {
     private static List<Integer> actualProductPriceList;
     private static List<Integer> expectedProductPriceList;
 
-
     public DefinitionStepsForSorting(BaseStepDefinition baseStepDefinition) {
         this.baseStepDefinition = baseStepDefinition;
     }
