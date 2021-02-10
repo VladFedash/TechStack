@@ -16,6 +16,7 @@
         <cucumber-java.version>6.9.1</cucumber-java.version>
         <cucumber-junit.version>6.9.1</cucumber-junit.version>
         <cucumber-picocontainer.version>6.9.1</cucumber-picocontainer.version>
+        <cucumber-reporting.version>5.5.2</cucumber-reporting.version>
     </properties>
 
     <dependencies>
@@ -60,9 +61,8 @@
         <dependency>
             <groupId>net.masterthought</groupId>
             <artifactId>cucumber-reporting</artifactId>
-            <version>5.5.2</version>
+            <version>${cucumber-reporting.version}</version>
         </dependency>
-
     </dependencies>
 
 </project>
