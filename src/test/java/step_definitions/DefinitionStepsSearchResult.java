@@ -48,6 +48,7 @@ public class DefinitionStepsSearchResult {
 
     @Then("User checks that amount of elements increased by the specified amount")
     public void checkElementIncreasing() {
+        waitUtils.waitForVisibilityOfAllElements(searchResultsPage.titleProductList);
         assertEquals(searchResultsPage.titleProductList.size(), expectedResult,
                 "Actual amount of elements doesn't equals expected amount. Actual amount: "
                         + searchResultsPage.titleProductList.size() + ". Expected result: " + expectedResult);
@@ -71,7 +72,6 @@ public class DefinitionStepsSearchResult {
 
     @Then("User checks actual massage equals {string}")
     public void checksMessageEquals(final String massage) {
-        waitUtils.waitForElementVisibilityAfterMiddleWait(searchResultsPage.massageAboutNoMatches);
         String actualResult = searchResultsPage.massageAboutNoMatches.getText();
         assertEquals(actualResult, massage,
                 "Actual message doesn't equals expected message about no matches. Actual message: "

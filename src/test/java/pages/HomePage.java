@@ -35,7 +35,7 @@ public class HomePage extends BasePage {
     @FindBy(xpath = ".//h4[@class = 'cart-dummy__heading']")
     public WebElement emptyCartMessage;
 
-    @FindBy(xpath = ".//div[@class = 'js-rz-cart']")
+    @FindBy(xpath = ".//rz-cart[contains(@class, 'header')]")
     public WebElement openCartButton;
 
     @FindBy(xpath = ".//div[contains(@class, 'sum-price')]")
@@ -58,7 +58,7 @@ public class HomePage extends BasePage {
     }
 
     public void inputToSearchFieldAndPressEnter(String keyword) {
-        waitUtils.waitForElementVisibilityAfterMiddleWait(searchField);
+        waitUtils.waitForElementToBeClickableAfterMiddleWait(searchField);
         searchField.sendKeys(keyword, Keys.ENTER);
     }
 }
