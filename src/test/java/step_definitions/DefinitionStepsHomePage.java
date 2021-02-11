@@ -1,18 +1,21 @@
 package step_definitions;
 
-import enums.Languages;
 import helpers.BaseOperations;
 import helpers.WaitUtils;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import pages.BasePage;
+import net.serenitybdd.junit.runners.SerenityRunner;
+import net.thucydides.core.annotations.Steps;
+import org.junit.runner.RunWith;
 import pages.HomePage;
+import steps.SortingSteps;
 
 import java.util.Random;
 
 import static org.testng.Assert.*;
 
+@RunWith(SerenityRunner.class)
 public class DefinitionStepsHomePage {
     private final BaseStepDefinition baseStepDefinition;
     private static String expectedResult;
@@ -26,11 +29,13 @@ public class DefinitionStepsHomePage {
     WaitUtils waitUtils;
     BaseOperations baseOperations;
 
+    @Steps
+    SortingSteps sortingSteps;
+
+
     @Given("User opens home page")
-    public void openHomePage() {
-        baseStepDefinition.driver.manage().window().maximize();
-        baseStepDefinition.driver.get(ROZETKA_URL);
-        new BasePage(baseStepDefinition.driver).setAppLanguage(Languages.RU);
+    public void shouldOpenHomePage() {
+        sortingSteps.openHomePage();
     }
 
     @Then("Home page is displayed for user")
