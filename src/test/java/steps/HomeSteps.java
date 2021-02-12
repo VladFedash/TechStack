@@ -77,16 +77,20 @@ public class HomeSteps {
     @Step
     public void getTagName(final String sortingType) {
         homePage = new HomePage(driver);
+        waitUtils = new WaitUtils(driver);
+
         assertEquals(homePage.catalog.getTagName(), sortingType);
     }
 
     @Step
     public void getAttributeName(final String attributeName) {
+        waitUtils.waitForElementVisibilityAfterShortWait(homePage.catalog);
         assertEquals(homePage.catalog.getAttribute("aria-label"), attributeName);
     }
 
     @Step
     public void getCssValue(final String pixels) {
+        waitUtils.waitForElementVisibilityAfterShortWait(homePage.catalog);
         assertEquals(homePage.catalog.getCssValue("font-size"), pixels);
 
     }

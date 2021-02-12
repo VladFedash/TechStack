@@ -13,8 +13,8 @@ Feature: Action with cart
     Then Users checks that cart count is '<EXPECTED_COUNT>'
 
     Examples:
-      | SEARCH_WORD | PRODUCT_TITLE                                                         | EXPECTED_COUNT |
-      | xiaomi      | Видеорегистратор Xiaomi Yi Smart Dash WiFi Gray International Edition | 1              |
+      | SEARCH_WORD | PRODUCT_TITLE                                            | EXPECTED_COUNT |
+      | xiaomi      | XIAOMI MiJia Automatic Foam Soap MJXSJ01XW/MJXSJ03XW 320 | 1              |
 
   Scenario Outline: Check remove product from cart
     When User input '<SEARCH_WORD>' into search field with action functionality
@@ -24,8 +24,8 @@ Feature: Action with cart
     Then User checks that cart is '<EMPTY>'
 
     Examples:
-      | SEARCH_WORD | PRODUCT_TITLE                                                         | EMPTY         |
-      | xiaomi      | Видеорегистратор Xiaomi Yi Smart Dash WiFi Gray International Edition | Корзина пуста |
+      | SEARCH_WORD | PRODUCT_TITLE                                            | EMPTY         |
+      | xiaomi      | XIAOMI MiJia Automatic Foam Soap MJXSJ01XW/MJXSJ03XW 320 | Корзина пуста |
 
   Scenario Outline: Check subtotal price of elements in cart
     When User input '<SEARCH_WORD>' into search field with action functionality
@@ -37,5 +37,5 @@ Feature: Action with cart
     Then User checks that products sum price equals subtotal price
 
     Examples:
-      | SEARCH_WORD | FIRST_PRODUCT_TITLE                                                   | SECOND_PRODUCT_TITLE                          | THIRD_PRODUCT_TITLE                                  |
-      | xiaomi      | Видеорегистратор Xiaomi Yi Smart Dash WiFi Gray International Edition | IP-камера Xiaomi YI 1080p Home White YYS.2016 | IP-камера Xiaomi YI Dome X 360° 1080P White YYS.3017 |
+      | SEARCH_WORD | FIRST_PRODUCT_TITLE                                      | SECOND_PRODUCT_TITLE                          | THIRD_PRODUCT_TITLE                                  |
+      | xiaomi      | XIAOMI MiJia Automatic Foam Soap MJXSJ01XW/MJXSJ03XW 320 | IP-камера Xiaomi YI 1080p Home White YYS.2016 | IP-камера Xiaomi YI Dome X 360° 1080P White YYS.3017 |
