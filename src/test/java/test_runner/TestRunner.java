@@ -1,13 +1,12 @@
 package test_runner;
 
-import io.cucumber.junit.CucumberOptions;
-import net.serenitybdd.junit.runners.SerenityRunner;
+import cucumber.api.CucumberOptions;
+import net.serenitybdd.cucumber.CucumberWithSerenity;
 import org.junit.runner.RunWith;
 
-@RunWith(SerenityRunner.class)
+@RunWith(CucumberWithSerenity.class)
 @CucumberOptions(
-        features = "src/test/java/features",
-        glue = "src/test/java/step_definitions"
-)
+        features = "src/test/resources/features/",
+        glue = "step_definitions")
 public class TestRunner {
 }
