@@ -6,7 +6,7 @@ import io.cucumber.java.Before;
 import org.openqa.selenium.WebDriver;
 
 public class BaseStepDefinition {
-    WebDriver driver;
+    public WebDriver driver;
 
     @Before
     public void testSetUp() {

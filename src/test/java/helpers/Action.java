@@ -17,7 +17,8 @@ public class Action extends WaitUtils {
         action.moveToElement(element)
                 .click()
                 .keyDown(element, Keys.SHIFT)
-                .sendKeys(element, str, Keys.ENTER)
-                .perform();
+                .sendKeys(element, str, Keys.ENTER);
+        waitForElementVisibilityAfterShortWait(element);
+        action.perform();
     }
 }
