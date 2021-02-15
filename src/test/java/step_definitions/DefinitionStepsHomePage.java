@@ -18,33 +18,36 @@ public class DefinitionStepsHomePage {
     private static String expectedResult;
     private static final String ROZETKA_URL = "https://rozetka.com.ua/";
 
-    public DefinitionStepsHomePage(BaseStepDefinition baseStepDefinition) {
-        this.baseStepDefinition = baseStepDefinition;
-    }
-
     HomePage homePage;
+    BasePage basePage;
     WaitUtils waitUtils;
     BaseOperations baseOperations;
+
+    public DefinitionStepsHomePage(BaseStepDefinition baseStepDefinition) {
+        this.baseStepDefinition = baseStepDefinition;
+        homePage = new HomePage(baseStepDefinition.driver);
+        basePage = new BasePage(baseStepDefinition.driver);
+        waitUtils = new WaitUtils(baseStepDefinition.driver);
+        baseOperations = new BaseOperations(baseStepDefinition.driver);
+    }
 
     @Given("User opens home page")
     public void openHomePage() {
         baseStepDefinition.driver.manage().window().maximize();
         baseStepDefinition.driver.get(ROZETKA_URL);
-        new BasePage(baseStepDefinition.driver).setAppLanguage(Languages.RU);
+        basePage.setAppLanguage(Languages.RU);
     }
 
     @Then("Home page is displayed for user")
     public void waitForHomePageDisplayed() {
-        new WaitUtils(baseStepDefinition.driver).waitForPageLoading();
+        waitUtils.waitForPageLoading();
     }
 
     @When("User clicks on the city button")
     public void clickChangeCity() {
-        waitUtils = new WaitUtils(baseStepDefinition.driver);
-        baseOperations = new BaseOperations(baseStepDefinition.driver);
-
-        homePage = new HomePage(baseStepDefinition.driver);
+        waitUtils.waitForProblematicElements(homePage.menuButton);
         baseOperations.clickButton(homePage.menuButton);
+        waitUtils.waitForProblematicElements(homePage.changeCitiesButton);
         baseOperations.clickButton(homePage.changeCitiesButton);
         waitUtils.waitForElementVisibilityAfterShortWait(homePage.modalHeader);
     }
@@ -67,6 +70,7 @@ public class DefinitionStepsHomePage {
 
     @Then("User checks changed city location")
     public void checkCityLocationChanged() {
+        waitUtils.waitForProblematicElements(homePage.menuButton);
         baseOperations.clickButton(homePage.menuButton);
         waitUtils.waitForElementVisibilityAfterShortWait(homePage.changeCitiesButton);
         String actualResult = homePage.changeCitiesButton.getText();
@@ -76,18 +80,17 @@ public class DefinitionStepsHomePage {
     }
 
     @Then("User checks that tag name equals {string}")
-    public void getTagName(final String sortingType) {
-        homePage = new HomePage(baseStepDefinition.driver);
+    public void getTagName(String sortingType) {
         assertEquals(homePage.catalog.getTagName(), sortingType);
     }
 
     @Then("User checks that attribute name 'arial-label' equals {string}")
-    public void getAttributeName(final String attributeName) {
+    public void getAttributeName(String attributeName) {
         assertEquals(homePage.catalog.getAttribute("aria-label"), attributeName);
     }
 
     @Then("User checks that css value 'font-size' equals {string}")
-    public void getCssValue(final String pixels) {
+    public void getCssValue(String pixels) {
         assertEquals(homePage.catalog.getCssValue("font-size"), pixels);
 
     }

@@ -12,11 +12,6 @@ import pages.SearchResultsPage;
 import static org.testng.Assert.assertEquals;
 
 public class DefinitionStepsWithCart {
-    private final BaseStepDefinition baseStepDefinition;
-
-    public DefinitionStepsWithCart(BaseStepDefinition baseStepDefinition) {
-        this.baseStepDefinition = baseStepDefinition;
-    }
 
     Action action;
     HomePage homePage;
@@ -25,27 +20,31 @@ public class DefinitionStepsWithCart {
     BaseOperations baseOperations;
     SearchResultsPage searchResultsPage;
 
-    @When("User input {string} into search field with action functionality")
-    public void inputKeywordByActionToSearchField(final String searchKeyword) {
-        waitUtils = new WaitUtils(baseStepDefinition.driver);
-        homePage = new HomePage(baseStepDefinition.driver);
+    public DefinitionStepsWithCart(BaseStepDefinition baseStepDefinition) {
         action = new Action(baseStepDefinition.driver);
-        action.inputToSearchField(homePage.searchField, searchKeyword);
-
+        homePage = new HomePage(baseStepDefinition.driver);
+        basePage = new BasePage(baseStepDefinition.driver);
+        waitUtils = new WaitUtils(baseStepDefinition.driver);
+        baseOperations = new BaseOperations(baseStepDefinition.driver);
         searchResultsPage = new SearchResultsPage(baseStepDefinition.driver);
+    }
+
+    @When("User inputs {string} into search field with action functionality")
+    public void inputKeywordByActionToSearchField(String searchKeyword) {
+        waitUtils.waitForProblematicElements(homePage.searchField);
+        action.inputToSearchField(homePage.searchField, searchKeyword);
         waitUtils.waitForVisibilityOfAllElements(searchResultsPage.titleProductList);
     }
 
-
     @When("User adds into the cart product with {string} title")
-    public void addProductIntoCart(final String title) {
+    public void addProductIntoCart(String title) {
         waitUtils.waitForVisibilityOfAllElements(searchResultsPage.titleProductList);
         searchResultsPage.addProductInCart(title);
         waitUtils.waitForElementVisibilityAfterShortWait(homePage.productCountInCart);
     }
 
     @Then("Users checks that cart count is {string}")
-    public void checkAddIntoCart(final String productAmountInCart) {
+    public void checkAddIntoCart(String productAmountInCart) {
         int actualResult = Integer.parseInt(homePage.productCountInCart.getText().trim());
         assertEquals(actualResult, Integer.parseInt(productAmountInCart),
                 "Actual count in cart doesn't equals expected count. Actual count is: " + actualResult
@@ -55,20 +54,18 @@ public class DefinitionStepsWithCart {
     @When("User opens cart")
     public void openCart() {
         waitUtils.waitForVisibilityOfAllElements(searchResultsPage.titleProductList);
-        baseOperations = new BaseOperations(baseStepDefinition.driver);
         baseOperations.clickButton(homePage.openCartButton);
     }
 
     @When("User deletes product from cart")
     public void deleteProduct() {
-        waitUtils.waitForElementVisibilityAfterShortWait(homePage.contextMenuButton);
+        waitUtils.waitForProblematicElements(homePage.contextMenuButton);
         baseOperations.clickButton(homePage.contextMenuButton);
-        waitUtils.waitForElementVisibilityAfterShortWait(homePage.deleteProductFromCartButton);
         baseOperations.clickButton(homePage.deleteProductFromCartButton);
     }
 
     @Then("User checks that cart is {string}")
-    public void checkCartEmpty(final String emptyMessage) {
+    public void checkCartEmpty(String emptyMessage) {
         waitUtils.waitForElementVisibilityAfterShortWait(homePage.emptyCartMessage);
         String actualResult = homePage.emptyCartMessage.getText();
         assertEquals(actualResult, emptyMessage,
@@ -78,7 +75,6 @@ public class DefinitionStepsWithCart {
 
     @When("User closes ad popup if it's visible")
     public void closePopup() {
-        basePage = new BasePage(baseStepDefinition.driver);
         basePage.closeAdPopup();
     }
 

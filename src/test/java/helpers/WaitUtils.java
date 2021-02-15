@@ -2,7 +2,10 @@ package helpers;
 
 import enums.WaitTimes;
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
@@ -25,8 +28,8 @@ public class WaitUtils {
         waitForElementVisibility(WaitTimes.SHORT.getValue(), element);
     }
 
-    public void waitForPageLoading(){
-        driver.manage().timeouts().pageLoadTimeout(WaitTimes.LONG.getValue(),TimeUnit.SECONDS);
+    public void waitForPageLoading() {
+        driver.manage().timeouts().pageLoadTimeout(WaitTimes.LONG.getValue(), TimeUnit.SECONDS);
     }
 
     public void waitForElementVisibilityAfterMiddleWait(WebElement element) {
@@ -51,16 +54,38 @@ public class WaitUtils {
         wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
     }
 
-    public void waitForElementInvisibilityAfterShortWait(By by){
+    public void waitForElementInvisibilityAfterShortWait(By by) {
         waitForElementInvisibility(WaitTimes.SHORT.getValue(), by);
     }
 
-    public void waitForElementPresence(long timeout, By by){
+    public void waitForElementInvisibilityAfterMiddleWait(By by) {
+        waitForElementInvisibility(WaitTimes.MIDDLE.getValue(), by);
+    }
+
+    public void waitForDataLoading(By by) {
+        try {
+            driver.findElement(by).isDisplayed();
+            waitForElementInvisibilityAfterMiddleWait(by);
+        } catch (NoSuchElementException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void waitForProblematicElements(WebElement element) {
+        try {
+            element.isDisplayed();
+            waitForElementVisibilityAfterShortWait(element);
+        } catch (StaleElementReferenceException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void waitForElementPresence(long timeout, By by) {
         WebDriverWait wait = new WebDriverWait(driver, timeout);
         wait.until(ExpectedConditions.presenceOfElementLocated(by));
     }
 
-    public void waitForElementPresenceAfterShortWait(By by){
+    public void waitForElementPresenceAfterShortWait(By by) {
         waitForElementPresence(WaitTimes.SHORT.getValue(), by);
     }
 
