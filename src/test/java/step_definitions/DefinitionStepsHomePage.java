@@ -45,9 +45,9 @@ public class DefinitionStepsHomePage {
 
     @When("User clicks on the city button")
     public void clickChangeCity() {
-        waitUtils.waitForProblematicElements(homePage.menuButton);
+        waitUtils.waitForStaleElements(homePage.menuButton);
         baseOperations.clickButton(homePage.menuButton);
-        waitUtils.waitForProblematicElements(homePage.changeCitiesButton);
+        waitUtils.waitForStaleElements(homePage.changeCitiesButton);
         baseOperations.clickButton(homePage.changeCitiesButton);
         waitUtils.waitForElementVisibilityAfterShortWait(homePage.modalHeader);
     }
@@ -70,7 +70,7 @@ public class DefinitionStepsHomePage {
 
     @Then("User checks changed city location")
     public void checkCityLocationChanged() {
-        waitUtils.waitForProblematicElements(homePage.menuButton);
+        waitUtils.waitForStaleElements(homePage.menuButton);
         baseOperations.clickButton(homePage.menuButton);
         waitUtils.waitForElementVisibilityAfterShortWait(homePage.changeCitiesButton);
         String actualResult = homePage.changeCitiesButton.getText();

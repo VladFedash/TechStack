@@ -58,7 +58,7 @@ public class HomePage extends BasePage {
     }
 
     public void inputToSearchFieldAndPressEnter(String keyword) {
-        waitUtils.waitForProblematicElements(searchField);
+        waitUtils.waitForStaleElements(searchField);
         searchField.sendKeys(keyword, Keys.ENTER);
     }
 }

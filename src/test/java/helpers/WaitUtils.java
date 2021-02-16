@@ -71,7 +71,7 @@ public class WaitUtils {
         }
     }
 
-    public void waitForProblematicElements(WebElement element) {
+    public void waitForStaleElements(WebElement element) {
         try {
             element.isDisplayed();
             waitForElementVisibilityAfterShortWait(element);

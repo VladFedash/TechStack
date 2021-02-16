@@ -42,9 +42,9 @@ public class DefinitionStepsForSorting {
 
     @When("User opens notebook page")
     public void openPageByProductCatalog() {
-        waitUtils.waitForProblematicElements(homePage.catalog);
+        waitUtils.waitForStaleElements(homePage.catalog);
         baseOperations.clickButton(homePage.catalog);
-        waitUtils.waitForProblematicElements(homePage.notebooksPageOpenButton);
+        waitUtils.waitForStaleElements(homePage.notebooksPageOpenButton);
         baseOperations.clickButton(homePage.notebooksPageOpenButton);
         waitUtils.waitForElementVisibilityAfterShortWait(searchResultsPage.sortedList);
     }

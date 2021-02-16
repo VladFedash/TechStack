@@ -31,7 +31,7 @@ public class DefinitionStepsWithCart {
 
     @When("User inputs {string} into search field with action functionality")
     public void inputKeywordByActionToSearchField(String searchKeyword) {
-        waitUtils.waitForProblematicElements(homePage.searchField);
+        waitUtils.waitForStaleElements(homePage.searchField);
         action.inputToSearchField(homePage.searchField, searchKeyword);
         waitUtils.waitForVisibilityOfAllElements(searchResultsPage.titleProductList);
     }
@@ -59,7 +59,7 @@ public class DefinitionStepsWithCart {
 
     @When("User deletes product from cart")
     public void deleteProduct() {
-        waitUtils.waitForProblematicElements(homePage.contextMenuButton);
+        waitUtils.waitForStaleElements(homePage.contextMenuButton);
         baseOperations.clickButton(homePage.contextMenuButton);
         baseOperations.clickButton(homePage.deleteProductFromCartButton);
     }
