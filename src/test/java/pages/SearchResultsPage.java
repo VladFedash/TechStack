@@ -13,6 +13,8 @@ import java.util.List;
 public class SearchResultsPage extends BasePage {
     private static final String PRODUCT_BLOCK = ".//span[@class='goods-tile__title'][contains(text(), '%s')]/ancestor::div[@class = 'goods-tile']";
     private static List<Integer> actualProductPriceList;
+    public String PRODUCT_AMOUNT_LOCATOR = ".//p[@class = 'catalog-selection__label']";
+    public String SPINNER = ".//a[contains(@class, 'preloader_type_goods')]";
 
     PricesDTO pricesDTO = new PricesDTO();
 
@@ -23,7 +25,7 @@ public class SearchResultsPage extends BasePage {
     public WebElement productAmountOnPage;
 
     @FindBy(xpath = ".//div[@class = 'catalog-empty']")
-    public WebElement massageAboutNoMatches;
+    public WebElement messageAboutNoMatches;
 
     @FindBy(xpath = PRODUCT_BLOCK)
     public WebElement productBlock;
@@ -52,7 +54,6 @@ public class SearchResultsPage extends BasePage {
 
     public List<Integer> getProductPriceList() {
         productPriceList.forEach(productPrice -> {
-            waitUtils.waitForElementVisibilityAfterMiddleWait(productPrice);
             actualProductPriceList = new ArrayList<>();
             actualProductPriceList.add(baseOperations.getProductPrice(productPrice));
         });

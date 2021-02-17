@@ -1,7 +1,6 @@
 package pages;
 
-import helpers.WaitUtils;
-import org.openqa.selenium.Keys;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -9,8 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import java.util.List;
 
 public class HomePage extends BasePage {
-    WaitUtils waitUtils = new WaitUtils(driver);
-
+    private static final String PRODUCT_NAME = ".//a[@class ='menu__hidden-title'][contains(text(), '%s')]";
     @FindBy(xpath = ".//input[@name = 'search']")
     public WebElement searchField;
 
@@ -20,13 +18,13 @@ public class HomePage extends BasePage {
     @FindBy(xpath = ".//a[@class = 'header__logo']")
     public WebElement siteLogo;
 
-    @FindBy(xpath = ".//a[@class ='menu__hidden-title'][contains(@href, '/notebooks/')][not(contains(@href, 'preset=game'))]")
-    public WebElement notebooksPageOpenButton;
+    @FindBy(xpath = PRODUCT_NAME)
+    public WebElement productName;
 
     @FindBy(xpath = ".//span[contains(@class, 'counter')]")
     public WebElement productCountInCart;
 
-    @FindBy(xpath = ".//button[@id = 'cartProductActions0']")
+    @FindBy(xpath = ".//button[contains(@class, 'context-menu__toggle')]")
     public WebElement contextMenuButton;
 
     @FindBy(xpath = ".//button[contains(@class, 'context-menu-actions')]")
@@ -57,8 +55,9 @@ public class HomePage extends BasePage {
         super(driver);
     }
 
-    public void inputToSearchFieldAndPressEnter(String keyword) {
-        waitUtils.waitForElementToBeClickableAfterMiddleWait(searchField);
-        searchField.sendKeys(keyword, Keys.ENTER);
+    public WebElement getProductByName(String product){
+        productName = driver.findElement(By.xpath(String.format(PRODUCT_NAME, product)));
+        waitUtils.waitForElementVisibilityAfterMiddleWait(productName);
+        return productName;
     }
 }

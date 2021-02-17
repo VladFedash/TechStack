@@ -11,10 +11,10 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class BasePage {
-    WebDriver driver;
+    protected WebDriver driver;
     public static final String LOCATOR_FOR_BANNER = "//a[contains(@class ,'exponea-animate')]";
-    BaseOperations baseOperations;
-    WaitUtils waitUtils;
+    protected BaseOperations baseOperations;
+    protected WaitUtils waitUtils;
 
     @FindBy(xpath = "//span[@class = 'exponea-close-cross']")
     public WebElement closeAdButton;
@@ -28,7 +28,7 @@ public class BasePage {
     @FindBy(xpath = ".//rz-mobile-user-menu/button[@class = 'header__button']")
     public WebElement menuButton;
 
-    public String languageLocator = ".//a[text() = ' %s ']";
+    protected String languageLocator = ".//a[text() = ' %s ']";
 
     public BasePage(WebDriver driver) {
         this.driver = driver;

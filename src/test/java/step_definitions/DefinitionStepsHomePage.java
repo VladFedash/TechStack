@@ -18,34 +18,34 @@ public class DefinitionStepsHomePage {
     private static String expectedResult;
     private static final String ROZETKA_URL = "https://rozetka.com.ua/";
 
+    protected HomePage homePage;
+    protected BasePage basePage;
+    protected WaitUtils waitUtils;
+    protected BaseOperations baseOperations;
+
     public DefinitionStepsHomePage(BaseStepDefinition baseStepDefinition) {
         this.baseStepDefinition = baseStepDefinition;
+        homePage = new HomePage(baseStepDefinition.driver);
+        basePage = new BasePage(baseStepDefinition.driver);
+        waitUtils = new WaitUtils(baseStepDefinition.driver);
+        baseOperations = new BaseOperations(baseStepDefinition.driver);
     }
-
-    HomePage homePage;
-    WaitUtils waitUtils;
-    BaseOperations baseOperations;
 
     @Given("User opens home page")
     public void openHomePage() {
-        baseStepDefinition.driver.manage().window().maximize();
         baseStepDefinition.driver.get(ROZETKA_URL);
-        new BasePage(baseStepDefinition.driver).setAppLanguage(Languages.RU);
+        basePage.setAppLanguage(Languages.RU);
     }
 
     @Then("Home page is displayed for user")
     public void waitForHomePageDisplayed() {
-        new WaitUtils(baseStepDefinition.driver).waitForPageLoading();
+        waitUtils.waitForPageLoading();
     }
 
     @When("User clicks on the city button")
     public void clickChangeCity() {
-        waitUtils = new WaitUtils(baseStepDefinition.driver);
-        baseOperations = new BaseOperations(baseStepDefinition.driver);
-
-        homePage = new HomePage(baseStepDefinition.driver);
-        baseOperations.clickButton(homePage.menuButton);
-        baseOperations.clickButton(homePage.changeCitiesButton);
+        baseOperations.clickButtonForStaleElements(homePage.menuButton);
+        baseOperations.clickButtonForStaleElements(homePage.changeCitiesButton);
         waitUtils.waitForElementVisibilityAfterShortWait(homePage.modalHeader);
     }
 
@@ -67,27 +67,27 @@ public class DefinitionStepsHomePage {
 
     @Then("User checks changed city location")
     public void checkCityLocationChanged() {
-        baseOperations.clickButton(homePage.menuButton);
+        baseOperations.clickButtonForStaleElements(homePage.menuButton);
         waitUtils.waitForElementVisibilityAfterShortWait(homePage.changeCitiesButton);
         String actualResult = homePage.changeCitiesButton.getText();
         assertEquals(actualResult, expectedResult,
-                "Actual chosen city doesn't equals expected city. Actual city: " + actualResult
-                        + ". Expected city: " + expectedResult);
+                String.format("Actual chosen city doesn't equals expected city. Actual city: %s. Expected city: %s",
+                        actualResult, expectedResult));
     }
 
     @Then("User checks that tag name equals {string}")
-    public void getTagName(final String sortingType) {
-        homePage = new HomePage(baseStepDefinition.driver);
+    public void getTagName(String sortingType) {
         assertEquals(homePage.catalog.getTagName(), sortingType);
     }
 
     @Then("User checks that attribute name 'arial-label' equals {string}")
-    public void getAttributeName(final String attributeName) {
+    public void getAttributeName(String attributeName) {
         assertEquals(homePage.catalog.getAttribute("aria-label"), attributeName);
     }
 
     @Then("User checks that css value 'font-size' equals {string}")
-    public void getCssValue(final String pixels) {
+    public void getCssValue(String pixels) {
+        waitUtils.waitForStaleElements(homePage.catalog);
         assertEquals(homePage.catalog.getCssValue("font-size"), pixels);
 
     }
