@@ -7,35 +7,23 @@ Feature: Action with cart
     Given User opens home page
     Then Home page is displayed for user
 
-  Scenario Outline: Check add product to cart
-    When User inputs '<SEARCH_WORD>' into search field with action functionality
-    When User adds into the cart product with '<PRODUCT_TITLE>' title
-    Then Users checks that cart count is '<EXPECTED_COUNT>'
+  Scenario: Check add product to cart
+    When User inputs "xiaomi" into search field with action functionality
+    When User adds into the cart product with "XIAOMI MiJia Automatic Foam Soap MJXSJ01XW/MJXSJ03XW" title
+    Then Users checks that cart count is "1"
 
-    Examples:
-      | SEARCH_WORD | PRODUCT_TITLE                                        | EXPECTED_COUNT |
-      | xiaomi      | XIAOMI MiJia Automatic Foam Soap MJXSJ01XW/MJXSJ03XW | 1              |
-
-  Scenario Outline: Check remove product from cart
-    When User inputs '<SEARCH_WORD>' to search field and press enter
-    When User adds into the cart product with '<PRODUCT_TITLE>' title
+  Scenario: Check remove product from cart
+    When User inputs "xiaomi" into search field with action functionality
+    When User adds into the cart product with "XIAOMI MiJia Automatic Foam Soap MJXSJ01XW/MJXSJ03XW" title
     When User opens cart
     When User deletes product from cart
-    Then User checks that cart is '<EMPTY>'
+    Then User checks that cart is "Корзина пуста"
 
-    Examples:
-      | SEARCH_WORD | PRODUCT_TITLE                                        | EMPTY         |
-      | xiaomi      | XIAOMI MiJia Automatic Foam Soap MJXSJ01XW/MJXSJ03XW | Корзина пуста |
-
-  Scenario Outline: Check subtotal price of elements in cart
-    When User inputs '<SEARCH_WORD>' to search field and press enter
+  Scenario: Check subtotal price of elements in cart
+    When User inputs "xiaomi" into search field with action functionality
     When User closes ad popup if it's visible
-    When User adds into the cart product with '<FIRST_PRODUCT_TITLE>' title
-    When User adds into the cart product with '<SECOND_PRODUCT_TITLE>' title
-    When User adds into the cart product with '<THIRD_PRODUCT_TITLE>' title
+    When User adds into the cart product with "XIAOMI MiJia Automatic Foam Soap MJXSJ01XW/MJXSJ03XW" title
+    When User adds into the cart product with "IP-камера Xiaomi YI 1080p Home White YYS.2016" title
+    When User adds into the cart product with "IP-камера Xiaomi YI Dome X 360° 1080P White YYS.3017" title
     When User opens cart
     Then User checks that products sum price equals subtotal price
-
-    Examples:
-      | SEARCH_WORD | FIRST_PRODUCT_TITLE                                  | SECOND_PRODUCT_TITLE                          | THIRD_PRODUCT_TITLE                                  |
-      | xiaomi      | XIAOMI MiJia Automatic Foam Soap MJXSJ01XW/MJXSJ03XW | IP-камера Xiaomi YI 1080p Home White YYS.2016 | IP-камера Xiaomi YI Dome X 360° 1080P White YYS.3017 |

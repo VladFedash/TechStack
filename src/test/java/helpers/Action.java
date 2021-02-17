@@ -14,6 +14,7 @@ public class Action extends WaitUtils {
     Actions action = new Actions(driver);
 
     public void inputToSearchField(WebElement element, String str) {
+        waitForStaleElements(element);
         action.moveToElement(element).click();
         action.keyDown(element, Keys.SHIFT);
         action.sendKeys(element, str, Keys.ENTER).perform();

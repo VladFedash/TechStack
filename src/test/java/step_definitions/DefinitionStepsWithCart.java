@@ -13,12 +13,12 @@ import static org.testng.Assert.assertEquals;
 
 public class DefinitionStepsWithCart {
 
-    Action action;
-    HomePage homePage;
-    BasePage basePage;
-    WaitUtils waitUtils;
-    BaseOperations baseOperations;
-    SearchResultsPage searchResultsPage;
+    protected Action action;
+    protected HomePage homePage;
+    protected BasePage basePage;
+    protected WaitUtils waitUtils;
+    protected BaseOperations baseOperations;
+    protected SearchResultsPage searchResultsPage;
 
     public DefinitionStepsWithCart(BaseStepDefinition baseStepDefinition) {
         action = new Action(baseStepDefinition.driver);
@@ -31,7 +31,6 @@ public class DefinitionStepsWithCart {
 
     @When("User inputs {string} into search field with action functionality")
     public void inputKeywordByActionToSearchField(String searchKeyword) {
-        waitUtils.waitForStaleElements(homePage.searchField);
         action.inputToSearchField(homePage.searchField, searchKeyword);
         waitUtils.waitForVisibilityOfAllElements(searchResultsPage.titleProductList);
     }
@@ -47,19 +46,19 @@ public class DefinitionStepsWithCart {
     public void checkAddIntoCart(String productAmountInCart) {
         int actualResult = Integer.parseInt(homePage.productCountInCart.getText().trim());
         assertEquals(actualResult, Integer.parseInt(productAmountInCart),
-                "Actual count in cart doesn't equals expected count. Actual count is: " + actualResult
-                        + ". Expected amount is: " + Integer.parseInt(productAmountInCart));
+                String.format("Actual count in cart doesn't equals expected count. Actual count is: %d. Expected amount is: %d",
+                        actualResult, Integer.parseInt(productAmountInCart)));
     }
 
     @When("User opens cart")
     public void openCart() {
         waitUtils.waitForVisibilityOfAllElements(searchResultsPage.titleProductList);
         baseOperations.clickButton(homePage.openCartButton);
+        waitUtils.waitForElementVisibilityAfterMiddleWait(homePage.contextMenuButton);
     }
 
     @When("User deletes product from cart")
     public void deleteProduct() {
-        waitUtils.waitForStaleElements(homePage.contextMenuButton);
         baseOperations.clickButton(homePage.contextMenuButton);
         baseOperations.clickButton(homePage.deleteProductFromCartButton);
     }
@@ -69,8 +68,8 @@ public class DefinitionStepsWithCart {
         waitUtils.waitForElementVisibilityAfterShortWait(homePage.emptyCartMessage);
         String actualResult = homePage.emptyCartMessage.getText();
         assertEquals(actualResult, emptyMessage,
-                "Actual message about empty cart doesn't equals expected message. Actual message is: " + actualResult
-                        + ". Expected message is: " + emptyMessage);
+                String.format("Actual message about empty cart doesn't equals expected message. Actual message is: %s. Expected message is: %s",
+                        actualResult, emptyMessage));
     }
 
     @When("User closes ad popup if it's visible")
@@ -84,7 +83,7 @@ public class DefinitionStepsWithCart {
 
         int actualResult = baseOperations.getProductPrice(homePage.totalProductPriceInCart);
         assertEquals(actualResult, searchResultsPage.getProductDTOSubtotal(),
-                "Actual product subtotal doesn't equals expected result. Actual result: " + actualResult
-                        + "Expected subtotal: " + searchResultsPage.getProductDTOSubtotal());
+                String.format("Actual product subtotal doesn't equals expected result. Actual result: %dExpected subtotal: %d",
+                        actualResult, searchResultsPage.getProductDTOSubtotal()));
     }
 }

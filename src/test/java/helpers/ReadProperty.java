@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class ReadProperty {
-    Properties prop = new Properties();
-    String property;
+    protected Properties prop = new Properties();
+    protected String property;
 
     public String readProperty(String str){
         try {

@@ -18,10 +18,10 @@ public class DefinitionStepsHomePage {
     private static String expectedResult;
     private static final String ROZETKA_URL = "https://rozetka.com.ua/";
 
-    HomePage homePage;
-    BasePage basePage;
-    WaitUtils waitUtils;
-    BaseOperations baseOperations;
+    protected HomePage homePage;
+    protected BasePage basePage;
+    protected WaitUtils waitUtils;
+    protected BaseOperations baseOperations;
 
     public DefinitionStepsHomePage(BaseStepDefinition baseStepDefinition) {
         this.baseStepDefinition = baseStepDefinition;
@@ -33,7 +33,6 @@ public class DefinitionStepsHomePage {
 
     @Given("User opens home page")
     public void openHomePage() {
-        baseStepDefinition.driver.manage().window().maximize();
         baseStepDefinition.driver.get(ROZETKA_URL);
         basePage.setAppLanguage(Languages.RU);
     }
@@ -45,10 +44,8 @@ public class DefinitionStepsHomePage {
 
     @When("User clicks on the city button")
     public void clickChangeCity() {
-        waitUtils.waitForStaleElements(homePage.menuButton);
-        baseOperations.clickButton(homePage.menuButton);
-        waitUtils.waitForStaleElements(homePage.changeCitiesButton);
-        baseOperations.clickButton(homePage.changeCitiesButton);
+        baseOperations.clickButtonForStaleElements(homePage.menuButton);
+        baseOperations.clickButtonForStaleElements(homePage.changeCitiesButton);
         waitUtils.waitForElementVisibilityAfterShortWait(homePage.modalHeader);
     }
 
@@ -70,13 +67,12 @@ public class DefinitionStepsHomePage {
 
     @Then("User checks changed city location")
     public void checkCityLocationChanged() {
-        waitUtils.waitForStaleElements(homePage.menuButton);
-        baseOperations.clickButton(homePage.menuButton);
+        baseOperations.clickButtonForStaleElements(homePage.menuButton);
         waitUtils.waitForElementVisibilityAfterShortWait(homePage.changeCitiesButton);
         String actualResult = homePage.changeCitiesButton.getText();
         assertEquals(actualResult, expectedResult,
-                "Actual chosen city doesn't equals expected city. Actual city: " + actualResult
-                        + ". Expected city: " + expectedResult);
+                String.format("Actual chosen city doesn't equals expected city. Actual city: %s. Expected city: %s",
+                        actualResult, expectedResult));
     }
 
     @Then("User checks that tag name equals {string}")
@@ -91,6 +87,7 @@ public class DefinitionStepsHomePage {
 
     @Then("User checks that css value 'font-size' equals {string}")
     public void getCssValue(String pixels) {
+        waitUtils.waitForStaleElements(homePage.catalog);
         assertEquals(homePage.catalog.getCssValue("font-size"), pixels);
 
     }

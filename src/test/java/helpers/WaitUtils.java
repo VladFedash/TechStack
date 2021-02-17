@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class WaitUtils {
-    WebDriver driver;
-    private static final int FREQUENCY = 3;
+    protected WebDriver driver;
+    private static final int FREQUENCY = 2;
 
     public WaitUtils(WebDriver driver) {
         this.driver = driver;
@@ -63,20 +63,22 @@ public class WaitUtils {
     }
 
     public void waitForDataLoading(By by) {
-        try {
-            driver.findElement(by).isDisplayed();
-            waitForElementInvisibilityAfterMiddleWait(by);
-        } catch (NoSuchElementException e) {
-            e.printStackTrace();
+        if (elementIsVisible(by)) {
+            try {
+                waitForElementInvisibilityAfterMiddleWait(by);
+            } catch (NoSuchElementException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     public void waitForStaleElements(WebElement element) {
-        try {
-            element.isDisplayed();
-            waitForElementVisibilityAfterShortWait(element);
-        } catch (StaleElementReferenceException e) {
-            e.printStackTrace();
+        for (int i = 0; i < 5; i++) {
+            try {
+                waitForElementVisibilityAfterMiddleWait(element);
+                break;
+            } catch (StaleElementReferenceException ignored) {
+            }
         }
     }
 
@@ -101,7 +103,16 @@ public class WaitUtils {
         try {
             waitForElementVisibilityAfterMiddleWait(element);
             return true;
-        } catch (NoSuchElementException | TimeoutException exception) {
+        } catch (Exception exception) {
+            return false;
+        }
+    }
+
+    public boolean elementIsVisible(By by) {
+        try {
+            waitForElementPresenceAfterShortWait(by);
+            return true;
+        } catch (Exception exception) {
             return false;
         }
     }
